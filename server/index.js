@@ -12,9 +12,12 @@ app.listen(port, () => console.log(`App listening on http://localhost:${port}`))
 
 app.use(morgan('dev'));
 app.use(parser.urlencoded({extended: true}));
+app.use(parser.json());
 
 app.use(express.static('public'));
 
+
+//Get  // ORINGINAL
 app.get('/api/calendar/db/:hotelIdOrName', (req, res) => {
   console.log('REQUEST FROM HELP FUNC RECIEVED!');
   console.log(req.params);
@@ -36,6 +39,87 @@ app.get('/api/calendar/db/:hotelIdOrName', (req, res) => {
       res.status(200).send(data);
     }
   });
+});
+
+
+//Read
+
+
+//Create
+app.post('/api/crud/create', (req, res) => {
+
+  //If no data
+  if (req.body === undefined) {
+    res.sendStatus(400);
+  }
+
+  console.log('CRUD - Create NEW HOTEL RECORD');
+  let q = req.body;
+  const newHotel = {
+    hotelName: q.hotelName || 'SampleHotel',
+    roomsTotal: q.Number || 10,
+    maxGuestPerRoom: q.Number || 10,
+    vacancy: [ {date: q.vacancy[0].date || '', isBooked: q.vacancy[0].isBooked || true} ],
+    prices: [ {serviceName: q.prices[0].serviceName || '', price: q.prices[0].price || 0} ]
+  };
+
+  db.model.create(newHotel, (err, data) => {
+    console.log('QUERY SENT');
+    if (err) {
+      console.log('DB QUERY ERROR', err);
+      res.status(400).send();
+    } else {
+      console.log('DB QUERY SUCCESS');
+      res.status(200).send(data);
+    }
+  });
+});
+
+//Read
+app.get('/api/crud/read', (req, res) => {
+  //If no data
+  if (req.body === undefined) {
+    res.status(400).send('Bad Request');
+  }
+
+  let q = req.body.id;
+  let parsed = parseInt(q);
+  db.model.find({id: parsed})
+    .then( (d)=> res.status(200).send(d))
+    .catch( (e)=> res.status(400).send('Bad Read Request: ', e));
+});
+
+
+//Update
+app.put('/api/crud/update', (req, res) => {
+  //If no data
+  if (req.body === undefined) {
+    res.status(400).send('Bad Request');
+  }
+
+  let q = req.body.id;
+  let parsed = parseInt(q);
+  const name = req.body.name;
+  // db.model.
+  console.log('update = ', parsed, ' / ', name);
+  db.model.findOneAndUpdate({id: parsed}, {hotelName: name})
+    .then( ()=> res.status(200).send('Update Completed'))
+    .catch( (e)=> res.status(400).send('Bad Update Request: ', e));
+});
+
+//Delete
+app.delete('/api/crud/delete', (req, res) => {
+
+  //If no data
+  if (req.body === undefined) {
+    res.status(400).send('Bad Request');
+  }
+
+  let q = req.body.id;
+  let parsed = parseInt(q);
+  db.model.deleteOne({id: parsed})
+    .then( ()=> res.status(200).send('Delete Completed'))
+    .catch( (e)=> res.status(400).send('Bad Delete Request: ', e));
 });
 
 const sendResponseWithUpdatedData = (data, req, res) => {

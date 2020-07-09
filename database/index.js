@@ -9,7 +9,8 @@ const option = {
 };
 //database
 // 172.17.0.2
-mongoose.connect('mongodb://172.17.0.2/hotellist', option)
+// mongoose.connect('mongodb://172.17.0.2/hotellist', option)
+mongoose.connect('mongodb://localhost:27017/hotellist', option)
   .then((result)=>{
     console.log('DB CONNECT');
   })
@@ -31,14 +32,29 @@ const hotelSchema = new mongoose.Schema({
     type: Number,
     unique: true
   },
-  hotelName: String,
-  roomsTotal: Number,
-  maxGuestPerRoom: Number,
-  vacancy: [ {date: String, isBooked: Boolean} ],
-  prices: [ {serviceName: String, price: Number} ]
+  hotelName: {type: String, minlength: 1, maxlength: 40},
+  roomsTotal: {type: Number, min: 1},
+  maxGuestPerRoom: {type: Number, min: 1}
 });
 
+const vacancySchema = new mongoose.Schema({
+  hotelId: { type: Number, required: true},
+  date: { type: String, maxlength: 15 },
+  isBooked: { type: Boolean, required: true }
+});
+
+const priceSchema = new mongoose.Schema({
+  hotelId: { type: Number, required: true },
+  serviceName: { type: String, minlength: 1, maxlength: 20 },
+  price: { type: Number, required: true }
+});
+
+
+
 const HotelClass = mongoose.model('hotels', hotelSchema);
+const VacancyClass = mongoose.model('vacancies', vacancySchema);
+const PriceClass = mongoose.model('prices', priceSchema);
+
 
 module.exports.model = HotelClass;
 module.exports.connection = db;
