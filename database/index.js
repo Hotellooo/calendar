@@ -28,22 +28,21 @@ db.once('open', function() {
 //
 
 const hotelSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    unique: true
-  },
+  id: { type: Number, unique: true },
   hotelName: {type: String, minlength: 1, maxlength: 40},
   roomsTotal: {type: Number, min: 1},
   maxGuestPerRoom: {type: Number, min: 1}
 });
 
 const vacancySchema = new mongoose.Schema({
+  id: { type: Number, unique: true },
   hotelId: { type: Number, required: true},
   date: { type: String, maxlength: 15 },
   isBooked: { type: Boolean, required: true }
 });
 
 const priceSchema = new mongoose.Schema({
+  id: { type: Number, unique: true },
   hotelId: { type: Number, required: true },
   serviceName: { type: String, minlength: 1, maxlength: 20 },
   price: { type: Number, required: true }
@@ -56,6 +55,9 @@ const VacancyClass = mongoose.model('vacancies', vacancySchema);
 const PriceClass = mongoose.model('prices', priceSchema);
 
 
-module.exports.model = HotelClass;
+module.exports.hotelModel = HotelClass;
+module.exports.vacancyModel = VacancyClass;
+module.exports.priceModel = PriceClass;
+
 module.exports.connection = db;
 

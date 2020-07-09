@@ -29,7 +29,7 @@ app.get('/api/calendar/db/:hotelIdOrName', (req, res) => {
   } else {
     search = {'hotelName': {'$regex': q.slice(0, 1).toUpperCase() + q.slice(1)}};
   }
-  db.model.find(search, (err, data) => {
+  db.hotelModel.find(search, (err, data) => {
     console.log('QUERY SENT');
     if (err) {
       console.log('DB QUERY ERROR', err);
@@ -42,11 +42,10 @@ app.get('/api/calendar/db/:hotelIdOrName', (req, res) => {
 });
 
 
-//Read
 
 
 //Create
-app.post('/api/crud/create', (req, res) => {
+app.post('/api/hotel/create', (req, res) => {
 
   //If no data
   if (req.body === undefined) {
@@ -58,25 +57,26 @@ app.post('/api/crud/create', (req, res) => {
   const newHotel = {
     hotelName: q.hotelName || 'SampleHotel',
     roomsTotal: q.Number || 10,
-    maxGuestPerRoom: q.Number || 10,
-    vacancy: [ {date: q.vacancy[0].date || '', isBooked: q.vacancy[0].isBooked || true} ],
-    prices: [ {serviceName: q.prices[0].serviceName || '', price: q.prices[0].price || 0} ]
+    maxGuestPerRoom: q.Number || 10
   };
 
-  db.model.create(newHotel, (err, data) => {
+  //,
+  // vacancy: [ {date: q.vacancy[0].date || '', isBooked: q.vacancy[0].isBooked || true} ],
+  // prices: [ {serviceName: q.prices[0].serviceName || '', price: q.prices[0].price || 0} ]
+  db.hotelModel.create(newHotel, (err, data) => {
     console.log('QUERY SENT');
     if (err) {
-      console.log('DB QUERY ERROR', err);
+      console.log('Bad Create ERROR', err);
       res.status(400).send();
     } else {
       console.log('DB QUERY SUCCESS');
-      res.status(200).send(data);
+      res.status(201).send(data);
     }
   });
 });
 
 //Read
-app.get('/api/crud/read', (req, res) => {
+app.get('/api/hotel/read', (req, res) => {
   //If no data
   if (req.body === undefined) {
     res.status(400).send('Bad Request');
@@ -84,14 +84,23 @@ app.get('/api/crud/read', (req, res) => {
 
   let q = req.body.id;
   let parsed = parseInt(q);
-  db.model.find({id: parsed})
+  db.hotelModel.find({id: parsed})
     .then( (d)=> res.status(200).send(d))
     .catch( (e)=> res.status(400).send('Bad Read Request: ', e));
 });
 
 
+//Read - 2
+app.get('/api/hotel/read/:id', (req, res) => {
+  let q = req.params.id;
+  let parsed = parseInt(q);
+  db.hotelModel.find({id: parsed})
+    .then( (d)=> res.status(200).send(d))
+    .catch( (e)=> res.status(400).send('Bad Read Request: ', e));
+});
+
 //Update
-app.put('/api/crud/update', (req, res) => {
+app.patch('/api/hotel/update', (req, res) => {
   //If no data
   if (req.body === undefined) {
     res.status(400).send('Bad Request');
@@ -100,16 +109,58 @@ app.put('/api/crud/update', (req, res) => {
   let q = req.body.id;
   let parsed = parseInt(q);
   const name = req.body.name;
-  // db.model.
+  // db.hotelModel.
   console.log('update = ', parsed, ' / ', name);
-  db.model.findOneAndUpdate({id: parsed}, {hotelName: name})
-    .then( ()=> res.status(200).send('Update Completed'))
+  db.hotelModel.findOneAndUpdate({id: parsed}, {hotelName: name})
+    .then( (result)=> res.status(204).send('Update Completed'))
     .catch( (e)=> res.status(400).send('Bad Update Request: ', e));
 });
 
 //Delete
-app.delete('/api/crud/delete', (req, res) => {
+app.delete('/api/hotel/delete:id', (req, res) => {
+  let q = req.params.id;
+  let parsed = parseInt(q);
+  db.hotelModel.deleteOne({id: parsed})
+    .then( ()=> res.status(204).send('Delete Completed'))
+    .catch( (e)=> res.status(400).send('Bad Delete Request: ', e));
+});
 
+
+
+
+
+
+//// Vacancy ////
+//Create
+app.post('/api/vacancy/create', (req, res) => {
+
+  //If no data
+  if (req.body === undefined) {
+    res.sendStatus(400);
+  }
+
+  console.log('CRUD - Create NEW HOTEL RECORD');
+  let q = req.body;
+  const newHotel = {
+    hotelId: q.hotelId || 1,
+    date: q.date || 'Funny Today',
+    isBooked: q.isBooked || true
+  };
+
+  db.vacancyModel.create(newHotel, (err, data) => {
+    console.log('QUERY SENT - Vacancy');
+    if (err) {
+      console.log('Bad Create ERROR', err);
+      res.status(400).send();
+    } else {
+      console.log('DB QUERY SUCCESS');
+      res.status(201).send(data);
+    }
+  });
+});
+
+//Read
+app.get('/api/vacancy/read', (req, res) => {
   //If no data
   if (req.body === undefined) {
     res.status(400).send('Bad Request');
@@ -117,11 +168,137 @@ app.delete('/api/crud/delete', (req, res) => {
 
   let q = req.body.id;
   let parsed = parseInt(q);
-  db.model.deleteOne({id: parsed})
-    .then( ()=> res.status(200).send('Delete Completed'))
+  db.vacancyModel.find({hotelId: parsed})
+    .then( (d)=> res.status(200).send(d))
+    .catch( (e)=> res.status(400).send('Bad Read Request: ', e));
+});
+
+
+//Read - 2
+app.get('/api/vacancy/read/:id', (req, res) => {
+  let q = req.params.id;
+  let parsed = parseInt(q);
+  db.vacancyModel.find({hotelId: parsed})
+    .then( (d)=> res.status(200).send(d))
+    .catch( (e)=> res.status(400).send('Bad Read Request: ', e));
+});
+
+//Update
+app.patch('/api/vacancy/update', (req, res) => {
+  //If no data
+  if (req.body === undefined) {
+    res.status(400).send('Bad Request');
+  }
+
+  let q = req.body.id;
+  let parsed = parseInt(q);
+  const name = req.body.name;
+  // db.hotelModel.
+  console.log('update = ', parsed, ' / ', name);
+  db.vacancyModel.findOneAndUpdate({hotelId: parsed}, {isBooked: true})
+    .then( (result)=> res.status(204).send('Update Completed ' + result))
+    .catch( (e)=> res.status(400).send('Bad Update Request: ', e));
+});
+
+//Delete
+app.delete('/api/vacancy/delete:id', (req, res) => {
+  let q = req.params.id;
+  let parsed = parseInt(q);
+  db.hotelModel.deleteOne({id: parsed})
+    .then( ()=> res.status(204).send('Delete Completed'))
     .catch( (e)=> res.status(400).send('Bad Delete Request: ', e));
 });
 
+
+
+
+//// Price ////
+//Create
+app.post('/api/price/create', (req, res) => {
+
+  //If no data
+  if (req.body === undefined) {
+    res.sendStatus(400);
+  }
+
+  console.log('CRUD - Create NEW Price RECORD');
+  let q = req.body;
+  const newHotel = {
+    hotelId: q.hotelId || 1,
+    serviceName: q.serviceName || 'Free Service',
+    price: q.price || 0
+  };
+
+  db.priceModel.create(newHotel, (err, data) => {
+    console.log('QUERY SENT - Vacancy');
+    if (err) {
+      console.log('Bad Create ERROR', err);
+      res.status(400).send();
+    } else {
+      console.log('DB QUERY SUCCESS');
+      res.status(201).send(data);
+    }
+  });
+});
+
+//Read
+app.get('/api/price/read', (req, res) => {
+  //If no data
+  if (req.body === undefined) {
+    res.status(400).send('Bad Request');
+  }
+
+  let q = req.body.id;
+  let parsed = parseInt(q);
+  db.priceModel.find({hotelId: parsed})
+    .then( (d)=> res.status(200).send(d))
+    .catch( (e)=> res.status(400).send('Bad Read Request: ', e));
+});
+
+
+//Read - 2
+app.get('/api/price/read/:id', (req, res) => {
+  let q = req.params.id;
+  let parsed = parseInt(q);
+  db.priceModel.find({hotelId: parsed})
+    .then( (d)=> res.status(200).send(d))
+    .catch( (e)=> res.status(400).send('Bad Read Request: ', e));
+});
+
+//Update
+app.patch('/api/price/update', (req, res) => {
+  //If no data
+  if (req.body === undefined) {
+    res.status(400).send('Bad Request');
+  }
+
+  let q = req.body.id;
+  let parsed = parseInt(q);
+  const name = req.body.name;
+  // db.hotelModel.
+  console.log('update = ', parsed, ' / ', name);
+  db.priceModel.findOneAndUpdate({hotelId: parsed}, {price: 100})
+    .then( (result)=> res.status(204).send('Update Completed ' + result))
+    .catch( (e)=> res.status(400).send('Bad Update Request: ', e));
+});
+
+//Delete
+app.delete('/api/price/delete/:id', (req, res) => {
+  let q = req.body.id;
+  let parsed = parseInt(q);
+  db.priceModel.deleteOne({id: parsed})
+    .then( ()=> res.status(204).send('Delete Completed'))
+    .catch( (e)=> res.status(400).send('Bad Delete Request: ', e));
+});
+
+
+
+
+
+
+// ORIGINAL
+//  Require: RoomNumber, CheckInDate, CheckOutDate, GuestNumber
+//  Pupose: Calculate approximation,
 const sendResponseWithUpdatedData = (data, req, res) => {
   const checkInDate = req.query.checkIn;
   const checkOutDate = req.query.checkOut;
@@ -172,8 +349,9 @@ const sendResponseWithUpdatedData = (data, req, res) => {
   }
 };
 
+// Update  // ORINGINAL
 app.get('/api/calendar/update/', (req, res) => {
-  db.model.find({'id': req.query.id}, (err, data) => {
+  db.hotelModel.find({'id': req.query.id}, (err, data) => {
     if (err) {
       console.log('DB QUERY ERROR', err);
     } else {
