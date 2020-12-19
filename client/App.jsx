@@ -174,8 +174,8 @@ class App extends React.Component {
         calculateAvrgRate={this.calculateAvrgRate}
         displayNotAvailableMsg={this.displayNotAvailableMsg}
         changeCalendarView={this.changeCalendarView}
-      />
-      , document.getElementById('calendar'));
+      />,
+      document.getElementById('calendar'));
   }
 
   renderCalendar () {
@@ -191,6 +191,7 @@ class App extends React.Component {
 
   renderGuestsBasics () {
     return (
+      <div>
       <GuestsButton onClick={this.changeGuestsView}>
         <GuestsButtonDiv>
           <GuestsButtonIconSpan></GuestsButtonIconSpan>
@@ -223,6 +224,7 @@ class App extends React.Component {
 
         </GuestsButtonDiv>
       </GuestsButton>
+      </div>
     );
   }
 

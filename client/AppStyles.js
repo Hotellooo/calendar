@@ -139,10 +139,8 @@ export const GuestsWrapper = styled.div`
 `;
 
 export const GuestsButton = styled.button`
-  -webkit-flex: 1 1 0%;
-  -ms-flex: 1 1 0%;
-  flex: 1 1 0%;
   display: inline-block;
+  width: 354px;
   height: 100%;
   margin: 0 0 0 8px;
   cursor: pointer;

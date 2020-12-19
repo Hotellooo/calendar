@@ -49,16 +49,11 @@ const sendResponseWithUpdatedData = (data, req, res) => {
     rej[0]['err_msg'] = '* Over the limit of rooms available at the property';
     response = false;
   }
-
   let checkInIndex;
   let checkOutIndex;
   for (let i = 0; i < dataItem.vacancy.length; i ++) {
-    if (dataItem.vacancy[i].date === checkInDate) {
-      checkInIndex = i;
-    }
-    if (dataItem.vacancy[i].date === checkOutDate) {
-      checkOutIndex = i;
-    }
+    if (dataItem.vacancy[i].date === checkInDate) checkInIndex = i;
+    if (dataItem.vacancy[i].date === checkOutDate) checkOutIndex = i;
   }
   let timeGap = dataItem.vacancy.slice(checkInIndex, checkOutIndex);
   totalNights = timeGap.length;
@@ -72,12 +67,8 @@ const sendResponseWithUpdatedData = (data, req, res) => {
   for (let k = 0; k < newData[0].prices.length; k++) {
     newData[0].prices[k].price *= totalNights * roomsNumber;
   }
-
-  if (response) {
-    res.status(200).send(newData);
-  } else {
-    res.status(200).send(rej);
-  }
+  if (response) res.status(200).send(newData);
+  else res.status(200).send(rej);
 };
 
 app.get('/api/calendar/update/', (req, res) => {
