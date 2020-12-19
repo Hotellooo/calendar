@@ -35,15 +35,9 @@ class Guests extends React.Component {
 
   handlePlusClick (event) {
     const id = event.currentTarget.dataset.id;
-    if (id === '0') {
-      this.setState({ roomsNumber: ++this.state.roomsNumber });
-    }
-    if (id === '1') {
-      this.setState({ adultsNumber: ++this.state.adultsNumber });
-    }
-    if (id === '2') {
-      this.setState({ childrenNumber: ++this.state.childrenNumber });
-    }
+    if (id === '0') this.setState({ roomsNumber: ++this.state.roomsNumber });
+    if (id === '1') this.setState({ adultsNumber: ++this.state.adultsNumber });
+    if (id === '2') this.setState({ childrenNumber: ++this.state.childrenNumber });
   }
 
   handleUpdateClick () {
@@ -65,7 +59,10 @@ class Guests extends React.Component {
   }
 
   render () {
-    let links = {'state': ['roomsNumber', 'adultsNumber', 'childrenNumber'], 'labels': ['Rooms', 'Adults', 'Children']};
+    let links = {
+      'state': ['roomsNumber', 'adultsNumber', 'childrenNumber'],
+      'labels': ['Rooms', 'Adults', 'Children']
+    };
     const lines = [];
     for (let i = 0; i < 3; i++) {
       lines.push(
@@ -91,7 +88,6 @@ class Guests extends React.Component {
 
           <GuestsInnerLineLabel>
             <GuestsInnerLineLabelIcon>
-              {/* <FontAwesomeIcon icon={this.state[links.state[i]] === ''}></FontAwesomeIcon> */}
               {this.renderIcon(links.state[i])}
             </GuestsInnerLineLabelIcon>
             {links.labels[i]}

@@ -173,6 +173,7 @@ class App extends React.Component {
         getUpdatedData={this.getUpdatedData}
         calculateAvrgRate={this.calculateAvrgRate}
         displayNotAvailableMsg={this.displayNotAvailableMsg}
+        changeCalendarView={this.changeCalendarView}
       />
       , document.getElementById('calendar'));
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import {CalendarPortalWrapper, CalendarHeader, CalendarLegendDiv, CalendarLegendSpan, CheckInContainer, CheckInWrapper, CalendarMonths, CalendarNavBar, CalendarNavBarButton, CalendarNavBarButtonIcon, CalendarGrid, CalendarCaption, CalendarWeekdays, CalendarBody, WeekDaysRow, WeekDay, CalendarRow, CalendarCell, CalendarAverageSection, CalendarAverageSectionSpan, CalendarMonthsDiv, CalendarAverageSectionMsgSpan
+import {CalendarPortalWrapper, CalendarHeader, CalendarLegendDiv, CalendarLegendSpan, CheckInContainer, CheckInWrapper, CalendarMonths, CalendarNavBar, CalendarNavBarButton, CalendarNavBarButtonIcon, CalendarGrid, CalendarCaption, CalendarWeekdays, CalendarBody, WeekDaysRow, WeekDay, CalendarRow, CalendarCell, CalendarAverageSection, CalendarAverageSectionSpan, CalendarMonthsDiv, CalendarAverageSectionMsgSpan, CalendarHeaderTop, CalendarHeaderTopText, CloseButton
 
 } from './CalendarStyles.js';
 
@@ -176,7 +176,13 @@ class Calendar extends React.Component {
     return (
       <CalendarPortalWrapper>
 
-        <CalendarHeader>Select a date to continue
+        <CalendarHeader>
+
+          <CalendarHeaderTop>
+            <CalendarHeaderTopText>Select a date to continue</CalendarHeaderTopText>
+            <CloseButton onClick={this.props.changeCalendarView}></CloseButton>
+          </CalendarHeaderTop>
+
           <CalendarLegendDiv>
             <CalendarLegendSpan></CalendarLegendSpan>Lowest priced dates
           </CalendarLegendDiv>

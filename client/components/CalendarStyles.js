@@ -30,6 +30,33 @@ export const CalendarHeader = styled.div`
   text-align: center;
 `;
 
+export const CalendarHeaderTop = styled.div`
+`;
+
+export const CalendarHeaderTopText = styled.span`
+`;
+
+export const CloseButton = styled.button`
+  &:before {
+    content: "x";
+    font-size: 18px;
+    line-height: 36px;
+    color:#4a4a4a;
+  }
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    text-align: center;
+    transition: opacity .2s;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    background: #fff;
+    padding: 0;
+`;
+
 export const CalendarLegendDiv = styled.div`
   padding-top: 4px;
   font-size: 12px;
@@ -328,3 +355,5 @@ export const CalendarAverageSectionMsgSpan = styled.span`
   color: red;
   font-size: 12px;
 `;
+
+
