@@ -8,34 +8,26 @@ const moment = require('moment');
 const cors = require('cors');
 app.use(cors());
 
-app.listen(port, () => console.log(`App listening on http://localhost:${port}`));
-
 app.use(morgan('dev'));
 app.use(parser.urlencoded({extended: true}));
-
 app.use(express.static('public'));
 
-app.get('/api/calendar/db/:hotelIdOrName', (req, res) => {
-  console.log('REQUEST FROM HELP FUNC RECIEVED!');
-  console.log(req.params);
+app.get('/api/calendar/:hotelIdOrName', (req, res) => {
   let q = req.params.hotelIdOrName;
   let parsed = parseInt(q);
-  if (parsed) {
-    search = {'id': q};
-    console.log(search);
-  } else {
-    search = {'hotelName': {'$regex': q.slice(0, 1).toUpperCase() + q.slice(1)}};
-  }
+  let search;
+  if (parsed) search = {'id': parsed};
+  else search = {'hotelName': {'$regex': q.slice(0, 1).toUpperCase() + q.slice(1)}};
   db.model.find(search, (err, data) => {
-    console.log('QUERY SENT');
     if (err) {
-      console.log('DB QUERY ERROR', err);
+      console.log('DB QUERY ERROR', err)
       res.status(400).send();
-    } else {
+    }
+    if (data) {
       console.log('DB QUERY SUCCESS');
       res.status(200).send(data);
     }
-  });
+  })
 });
 
 const sendResponseWithUpdatedData = (data, req, res) => {
@@ -98,5 +90,7 @@ app.get('/api/calendar/update/', (req, res) => {
     }
   });
 });
+
+app.listen(port, () => console.log(`App listening on http://localhost:${port}`));
 
 module.exports = app;

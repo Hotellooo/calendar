@@ -1,8 +1,13 @@
 import axios from 'axios';
 
 const getDataFromServer = async (term) => {
-  const response = await axios.get(`/api/calendar/db/${term}`);
-  return response.data;
+  try{
+    const response = await axios.get(`/api/calendar/${term}`);
+    console.log('==GET DFS==RESPONSE', response.data);
+    return response.data;
+  } catch (err) {
+    console.log('Error: in getDataFromServer', err);
+  }
 };
 
 export default getDataFromServer;

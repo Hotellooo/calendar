@@ -7,9 +7,8 @@ const option = {
   useFindAndModify: false,
   useCreateIndex: true,
 };
-//database
-// 172.17.0.2
-mongoose.connect('mongodb://172.17.0.2/hotellist', option)
+
+mongoose.connect('mongodb://localhost/hotellist', option) // 172.17.0.2
   .then((result)=>{
     console.log('DB CONNECT');
   })
@@ -20,11 +19,11 @@ mongoose.connect('mongodb://172.17.0.2/hotellist', option)
 const db = mongoose.connection;
 
 //Test connection
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('DATABASE CONNECTED!');
-});
-//
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', function() {
+//   console.log('DATABASE CONNECTED!');
+// });
+//---------------
 
 const hotelSchema = new mongoose.Schema({
   id: {

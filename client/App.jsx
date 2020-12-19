@@ -12,9 +12,8 @@ import styled from 'styled-components';
 import {MainWrapper, AppWrapper, HeaderWrapper, HeaderTextBlock, HeaderIconSpan, HeaderTextSpan, CalendarGuestsWrapper, DatePickerWrapper, GuestsWrapper, GuestsButton, GuestsButtonDiv, GuestsButtonIconSpan, GuestsButtonPickerSpan, GuestsButtonPickerSpanGuestsSpan, GuestsButtonPickerSpanGuestsConfigSpan, GuestsButtonPickerSpanGuestsConfigInnerSpan, DatePickerButton, DatePickerButtonDiv, DatePickerButtonDivIconSpan, DatePickerButtonDivFieldSpan, DatePickerButtonDivFieldSpanCheckIn, DatePickerButtonDivFieldSpanDate,
   BestDealsWrapper, DealsWrapper} from './AppStyles.js';
 
-import { faCalendarAlt} from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 
 class App extends React.Component {
   constructor (props) {
@@ -37,7 +36,7 @@ class App extends React.Component {
   }
 
   componentDidMount () {
-    this.getData('63');
+    this.getData(92);
   }
 
   getData (term) {
@@ -58,26 +57,18 @@ class App extends React.Component {
         checkOut: query.checkOut
       });
     }
-    if (!query.guestsNumber) {
-      query.guestsNumber = 2;
-    }
-    if (!query.roomsNumber) {
-      query.roomsNumber = 1;
-    }
+    if (!query.guestsNumber) query.guestsNumber = 2;
+    if (!query.roomsNumber) query.roomsNumber = 1;
     if (!query.checkIn) {
-      if (!this.state.checkIn) {
-        query.checkIn = moment().format('YYYY-MM-DD');
-      } else {
-        query.checkIn = this.state.checkIn;
-      }
+      if (!this.state.checkIn) query.checkIn = moment().format('YYYY-MM-DD');
+      else query.checkIn = this.state.checkIn;
     }
     if (!query.checkOut) {
-      if (!this.state.checkOut) {
-        query.checkOut = moment().add(1, 'day').format('YYYY-MM-DD');
-      } else {
-        query.checkOut = this.state.checkOut;
-      }
+      if (!this.state.checkOut) query.checkOut = moment().add(1, 'day').format('YYYY-MM-DD');
+      else query.checkOut = this.state.checkOut;
     }
+
+     //REVIEW >>> below
     const response = getUpdatedDataFromServer(query);
     response.then((hotel) => {
       if (hotel[0]['err_msg']) {
@@ -103,20 +94,11 @@ class App extends React.Component {
     if (!this.state.currentHotel[0]) {
       return 'Loading...';
     } else {
-      const prices = this.state.currentHotel[0].prices;
-      let smallest = prices[0];
-      let biggest = prices[1];
-      for (let i = 0; i < prices.length; i++) {
-        if (prices[i].price) {
-          if (prices[i].price < smallest) {
-            smallest = prices[i].price;
-          }
-          if (prices[i].price > biggest) {
-            biggest = prices[i].price;
-          }
-        }
-      }
-      return `$${smallest.price} - $${biggest.price}`;
+      const prices = [];
+      this.state.currentHotel[0].prices.forEach((elem) => {
+        if (elem.price !== 0) prices.push(elem.price);
+      });
+      return `$${Math.min(...prices)} - $${Math.max(...prices)}`;
     }
   }
 
@@ -174,17 +156,8 @@ class App extends React.Component {
   }
 
   renderCalendar () {
-    if (!this.state.calendarView) {
-      return this.renderCalendarBasics();
-    }
-    if (this.state.calendarView) {
-      return (
-        <div>
-          {this.renderCalendarBasics()}
-          {this.renderCalendarPortal()}
-        </div>
-      );
-    }
+    return !this.state.calendarView ? this.renderCalendarBasics() :
+    (<div>{this.renderCalendarBasics()}{this.renderCalendarPortal()}</div>)
   }
 
   changeGuestsView () {
@@ -222,18 +195,8 @@ class App extends React.Component {
   }
 
   renderGuests () {
-    if (!this.state.guestsView) {
-      return this.renderGuestsBasics();
-    }
-    if (this.state.guestsView) {
-      return (
-        <div>
-          {this.renderGuestsBasics()}
-          {this.renderGuestsPortal()}
-        </div>
-
-      );
-    }
+    return !this.state.guestsView ? this.renderCalendarBasics() :
+    (<div>{this.renderGuestsBasics()}{this.renderGuestsPortal()}</div>)
   }
 
   renderGuestsPortal () {

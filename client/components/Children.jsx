@@ -26,7 +26,6 @@ const Children = ({childrenNumber}) => {
   return (
     <ChildrenWrapper>
       {rows}
-
     </ChildrenWrapper>
   );
 };
