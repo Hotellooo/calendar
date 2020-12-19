@@ -12,7 +12,7 @@ app.use(morgan('dev'));
 app.use(parser.urlencoded({extended: true}));
 app.use(express.static('public'));
 
-app.get('/api/calendar/:hotelIdOrName', (req, res) => {
+app.get('/api/calendar/hotels/:hotelIdOrName', (req, res) => {
   let q = req.params.hotelIdOrName;
   let parsed = parseInt(q);
   let search;

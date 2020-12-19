@@ -33,6 +33,7 @@ class App extends React.Component {
     this.changeCalendarView = this.changeCalendarView.bind(this);
     this.renderGuests = this.renderGuests.bind(this);
     this.changeGuestsView = this.changeGuestsView.bind(this);
+    this.handleResponse = this.handleResponse.bind(this);
   }
 
   componentDidMount () {
@@ -67,27 +68,26 @@ class App extends React.Component {
       if (!this.state.checkOut) query.checkOut = moment().add(1, 'day').format('YYYY-MM-DD');
       else query.checkOut = this.state.checkOut;
     }
+    getUpdatedDataFromServer(query, this.handleResponse);
+  }
 
-     //REVIEW >>> below
-    const response = getUpdatedDataFromServer(query);
-    response.then((hotel) => {
-      if (hotel[0]['err_msg']) {
-        console.log(hotel[0]['err_msg']);
+  handleResponse (hotel) {
+    if (hotel[0]['err_msg']) {
+      console.log(hotel[0]['err_msg']);
+    } else {
+      if (this.state.calendarView) {
+        this.setState({
+          currentHotel: hotel,
+          calendarView: false,
+          guestsView: !this.state.guestsView
+        });
       } else {
-        if (this.state.calendarView) {
-          this.setState({
-            currentHotel: hotel,
-            calendarView: false,
-            guestsView: !this.state.guestsView
-          });
-        } else {
-          this.setState({
-            currentHotel: hotel,
-            guestsView: false
-          });
-        }
+        this.setState({
+          currentHotel: hotel,
+          guestsView: false
+        });
       }
-    });
+    }
   }
 
   calculateAvrgRate () {
@@ -195,8 +195,18 @@ class App extends React.Component {
   }
 
   renderGuests () {
-    return !this.state.guestsView ? this.renderCalendarBasics() :
-    (<div>{this.renderGuestsBasics()}{this.renderGuestsPortal()}</div>)
+    if (!this.state.guestsView) {
+      return this.renderGuestsBasics();
+    }
+    if (this.state.guestsView) {
+      return (
+        <div>
+          {this.renderGuestsBasics()}
+          {this.renderGuestsPortal()}
+        </div>
+
+      );
+    }
   }
 
   renderGuestsPortal () {

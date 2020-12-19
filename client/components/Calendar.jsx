@@ -19,6 +19,16 @@ class Calendar extends React.Component {
       clickCounter: 0,
       averageRate: ''
     };
+    // this.state = {
+    //   now: moment(),
+    //   currentMonth: moment(),
+    //   selectedDate: moment(),
+    //   nextMonth: moment().add(1, 'month'),
+    //   checkIn: false,
+    //   checkOut: false,
+    //   clickCounter: 0,
+    //   averageRate: ''
+    // }
     this.onDateClick = this.onDateClick.bind(this);
     this.nextMonth = this.nextMonth.bind(this);
     this.prevMonth = this.prevMonth.bind(this);
@@ -162,6 +172,7 @@ class Calendar extends React.Component {
   }
 
   render () {
+    // console.log(this.state)
     return (
       <CalendarPortalWrapper>
 
