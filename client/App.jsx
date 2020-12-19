@@ -45,7 +45,7 @@ class App extends React.Component {
   }
 
   componentDidMount () {
-    this.getData(92);
+    this.getData(60);
   }
 
   getData (term) {
@@ -205,12 +205,12 @@ class App extends React.Component {
               <span>
                 <GuestsButtonPickerSpanGuestsConfigInnerSpan>
                   {this.state.userConfig.roomsNumber}
-                  {this.state.userConfig.roomsNumber > 1 ? ' rooms' : ' room'},
+                  {this.state.userConfig.roomsNumber > 1 ? ' rooms, ' : ' room, '}
                 </GuestsButtonPickerSpanGuestsConfigInnerSpan>
 
                 <GuestsButtonPickerSpanGuestsConfigInnerSpan>
                   {this.state.userConfig.adultsNumber}
-                  {this.state.userConfig.adultsNumber > 1 ? ' adults' : ' adult'},
+                  {this.state.userConfig.adultsNumber > 1 ? ' adults, ' : ' adult, '}
                 </GuestsButtonPickerSpanGuestsConfigInnerSpan>
 
                 <GuestsButtonPickerSpanGuestsConfigInnerSpan>

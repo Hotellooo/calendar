@@ -9,21 +9,13 @@ const option = {
 };
 
 mongoose.connect('mongodb://localhost/hotellist', option) // 172.17.0.2
-  .then((result)=>{
-    console.log('DB CONNECT');
-  })
-  .catch((err)=>{
-    console.log('UNABLE TO CONNECT');
-  });
-
 const db = mongoose.connection;
 
 //Test connection
-// db.on('error', console.error.bind(console, 'connection error:'));
-// db.once('open', function() {
-//   console.log('DATABASE CONNECTED!');
-// });
-//---------------
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('DATABASE CONNECTED!');
+});
 
 const hotelSchema = new mongoose.Schema({
   id: {

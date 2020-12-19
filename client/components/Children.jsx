@@ -10,7 +10,7 @@ const Children = ({ childrenNumber }) => {
     rows.push(
       <ChildrenInnerLine key={i}>
         <ChildrenInnerLineDiv>
-          <ChildrenInnerLineSpan>{`Child${i}`}</ChildrenInnerLineSpan>
+          <ChildrenInnerLineSpan>{`Child ${i}`}</ChildrenInnerLineSpan>
           <ChildrenInnerLineDropDown>
             <ChildrenInnerLineDropDownField>10</ChildrenInnerLineDropDownField>
             <ChildrenInnerLineDropDownIcon>

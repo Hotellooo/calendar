@@ -62,8 +62,6 @@ export const AllDealsEntityServiceIconSpan = styled.span`
   font-style: normal;
   font-weight: 400;
   line-height: 1;
-  // content:'➚';
-  // content:'⇱';
 }
   display: flex;
   color: #4a4a4a;
@@ -189,4 +187,25 @@ export const ViewPortalLinePriceSpan = styled.span`
 
 export const ViewAllPortalLineIconSpan = styled.span`
   color: black;
+`;
+
+export const PopupWrapper = styled.div`
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
+  box-sizing: border-box;
+  border-radius: 2px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  position: absolute;
+  z-index: 25;
+  top:520px;
+  left: 390px;
+  width: 300px;
+  height: auto;
+`;
+
+export const PopupTextDiv = styled.div`
+  margin: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  color: grey;
 `;
