@@ -315,9 +315,16 @@ export const CalendarAverageSection = styled.div`
   position:absolute;
   bottom:0;
   width: 90%;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const CalendarAverageSectionSpan = styled.span`
   color: #4a4a4a;
+  font-size: 12px;
+`;
+
+export const CalendarAverageSectionMsgSpan = styled.span`
+  color: red;
   font-size: 12px;
 `;

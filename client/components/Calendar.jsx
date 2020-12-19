@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import {CalendarPortalWrapper, CalendarHeader, CalendarLegendDiv, CalendarLegendSpan, CheckInContainer, CheckInWrapper, CalendarMonths, CalendarNavBar, CalendarNavBarButton, CalendarNavBarButtonIcon, CalendarGrid, CalendarCaption, CalendarWeekdays, CalendarBody, WeekDaysRow, WeekDay, CalendarRow, CalendarCell, CalendarAverageSection, CalendarAverageSectionSpan, CalendarMonthsDiv
+import {CalendarPortalWrapper, CalendarHeader, CalendarLegendDiv, CalendarLegendSpan, CheckInContainer, CheckInWrapper, CalendarMonths, CalendarNavBar, CalendarNavBarButton, CalendarNavBarButtonIcon, CalendarGrid, CalendarCaption, CalendarWeekdays, CalendarBody, WeekDaysRow, WeekDay, CalendarRow, CalendarCell, CalendarAverageSection, CalendarAverageSectionSpan, CalendarMonthsDiv, CalendarAverageSectionMsgSpan
 
 } from './CalendarStyles.js';
 
@@ -239,6 +239,9 @@ class Calendar extends React.Component {
           <CalendarAverageSectionSpan>
           Average daily rates: {this.props.calculateAvrgRate()}
           </CalendarAverageSectionSpan>
+          <CalendarAverageSectionMsgSpan>
+          {this.props.displayNotAvailableMsg()}
+          </CalendarAverageSectionMsgSpan>
         </CalendarAverageSection>
 
       </CalendarPortalWrapper>

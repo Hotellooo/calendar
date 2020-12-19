@@ -25,6 +25,7 @@ class App extends React.Component {
       currentHotel: [],
       checkIn: false,
       checkOut: false,
+      msg: ''
     };
     this.getData = this.getData.bind(this);
     this.getUpdatedData = this.getUpdatedData.bind(this);
@@ -34,6 +35,7 @@ class App extends React.Component {
     this.renderGuests = this.renderGuests.bind(this);
     this.changeGuestsView = this.changeGuestsView.bind(this);
     this.handleResponse = this.handleResponse.bind(this);
+    this.displayNotAvailableMsg = this.displayNotAvailableMsg.bind(this);
   }
 
   componentDidMount () {
@@ -74,6 +76,9 @@ class App extends React.Component {
   handleResponse (hotel) {
     if (hotel[0]['err_msg']) {
       console.log(hotel[0]['err_msg']);
+      this.setState({
+        msg: hotel[0]['err_msg']
+      })
     } else {
       if (this.state.calendarView) {
         this.setState({
@@ -88,6 +93,10 @@ class App extends React.Component {
         });
       }
     }
+  }
+
+  displayNotAvailableMsg () {
+    return this.state.msg.length ? this.state.msg : null
   }
 
   calculateAvrgRate () {
@@ -151,7 +160,11 @@ class App extends React.Component {
 
   renderCalendarPortal () {
     return ReactDOM.createPortal(
-      <Calendar getUpdatedData={this.getUpdatedData} calculateAvrgRate={this.calculateAvrgRate}/>
+      <Calendar
+        getUpdatedData={this.getUpdatedData}
+        calculateAvrgRate={this.calculateAvrgRate}
+        displayNotAvailableMsg={this.displayNotAvailableMsg}
+      />
       , document.getElementById('calendar'));
   }
 
@@ -211,7 +224,10 @@ class App extends React.Component {
 
   renderGuestsPortal () {
     return ReactDOM.createPortal(
-      <Guests getUpdatedData={this.getUpdatedData} changeGuestsView={this.changeGuestsView}/>,
+      <Guests
+        getUpdatedData={this.getUpdatedData}
+        changeGuestsView={this.changeGuestsView}
+      />,
       document.getElementById('guests')
     );
   }
