@@ -3,13 +3,12 @@ import Children from './Children.jsx';
 import styled from 'styled-components';
 import {GuestsWrapper, GuestsInnerLine, GuestsInnerLineConfig, GuestsInnerLineConfigButton, GuestsInnerLineConfigField, GuestsInnerLineConfigButtonSpan, GuestsInnerLineLabel, GuestsInnerLineLabelIcon, CloseButton, UpdateButtonDiv, UpdateButton} from './GuestsStyles.js';
 
-import { faMinus, faPlus, faBed} from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus, faBed, faUserFriends, faChild} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class Guests extends React.Component {
   constructor () {
     super();
-
     this.state = {
       roomsNumber: 1,
       adultsNumber: 2,
@@ -18,43 +17,32 @@ class Guests extends React.Component {
     this.handleMinusClick = this.handleMinusClick.bind(this);
     this.handlePlusClick = this.handlePlusClick.bind(this);
     this.handleUpdateClick = this.handleUpdateClick.bind(this);
+    this.renderIcon = this.renderIcon.bind(this);
   }
 
   handleMinusClick (event) {
     const id = event.currentTarget.dataset.id;
     if (id === '0' && this.state.roomsNumber) {
-      this.setState({
-        roomsNumber: --this.state.roomsNumber
-      });
+      this.setState({ roomsNumber: --this.state.roomsNumber });
     }
     if (id === '1' && this.state.adultsNumber) {
-      this.setState({
-        adultsNumber: --this.state.adultsNumber
-      });
+      this.setState({ adultsNumber: --this.state.adultsNumber });
     }
     if (id === '2' && this.state.childrenNumber) {
-      this.setState({
-        childrenNumber: --this.state.childrenNumber
-      });
+      this.setState({ childrenNumber: --this.state.childrenNumber });
     }
   }
 
   handlePlusClick (event) {
     const id = event.currentTarget.dataset.id;
     if (id === '0') {
-      this.setState({
-        roomsNumber: ++this.state.roomsNumber
-      });
+      this.setState({ roomsNumber: ++this.state.roomsNumber });
     }
     if (id === '1') {
-      this.setState({
-        adultsNumber: ++this.state.adultsNumber
-      });
+      this.setState({ adultsNumber: ++this.state.adultsNumber });
     }
     if (id === '2') {
-      this.setState({
-        childrenNumber: ++this.state.childrenNumber
-      });
+      this.setState({ childrenNumber: ++this.state.childrenNumber });
     }
   }
 
@@ -67,7 +55,13 @@ class Guests extends React.Component {
       'childrenNumber': this.state.childrenNumber
     });
     this.props.getUpdatedData(config);
-    this.props.updateGuestPickerInfo(config)
+    this.props.updateGuestPickerInfo(config);
+  }
+
+  renderIcon (param) {
+    if(param === 'roomsNumber') return <FontAwesomeIcon icon={faBed}></FontAwesomeIcon>
+    if(param === 'adultsNumber') return <FontAwesomeIcon icon={faUserFriends}></FontAwesomeIcon>
+    if(param === 'childrenNumber') return <FontAwesomeIcon icon={faChild}></FontAwesomeIcon>
   }
 
   render () {
@@ -97,7 +91,8 @@ class Guests extends React.Component {
 
           <GuestsInnerLineLabel>
             <GuestsInnerLineLabelIcon>
-              <FontAwesomeIcon icon={faBed}></FontAwesomeIcon>
+              {/* <FontAwesomeIcon icon={this.state[links.state[i]] === ''}></FontAwesomeIcon> */}
+              {this.renderIcon(links.state[i])}
             </GuestsInnerLineLabelIcon>
             {links.labels[i]}
           </GuestsInnerLineLabel>

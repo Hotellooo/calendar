@@ -81,9 +81,7 @@ class App extends React.Component {
 
   handleResponse (hotel) {
     if (hotel[0]['err_msg']) {
-      this.setState({
-        msg: hotel[0]['err_msg']
-      })
+      this.setState({ msg: hotel[0]['err_msg'] })
     } else {
       if (this.state.calendarView) {
         this.setState({
@@ -191,7 +189,6 @@ class App extends React.Component {
   }
 
   renderGuestsBasics () {
-    console.log('renderGB invoked()')
     return (
       <GuestsButton onClick={this.changeGuestsView}>
         <GuestsButtonDiv>
