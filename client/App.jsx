@@ -25,7 +25,12 @@ class App extends React.Component {
       currentHotel: [],
       checkIn: false,
       checkOut: false,
-      msg: ''
+      msg: '',
+      userConfig: {
+        roomsNumber: 1,
+        adultsNumber: 2,
+        childrenNumber: 1
+      }
     };
     this.getData = this.getData.bind(this);
     this.getUpdatedData = this.getUpdatedData.bind(this);
@@ -36,6 +41,7 @@ class App extends React.Component {
     this.changeGuestsView = this.changeGuestsView.bind(this);
     this.handleResponse = this.handleResponse.bind(this);
     this.displayNotAvailableMsg = this.displayNotAvailableMsg.bind(this);
+    this.updateGuestPickerInfo = this.updateGuestPickerInfo.bind(this);
   }
 
   componentDidMount () {
@@ -75,7 +81,6 @@ class App extends React.Component {
 
   handleResponse (hotel) {
     if (hotel[0]['err_msg']) {
-      console.log(hotel[0]['err_msg']);
       this.setState({
         msg: hotel[0]['err_msg']
       })
@@ -97,6 +102,12 @@ class App extends React.Component {
 
   displayNotAvailableMsg () {
     return this.state.msg.length ? this.state.msg : null
+  }
+
+  updateGuestPickerInfo ({adultsNumber, childrenNumber, roomsNumber}) {
+    this.setState({
+      userConfig: { roomsNumber, adultsNumber, childrenNumber }
+    })
   }
 
   calculateAvrgRate () {
@@ -180,6 +191,7 @@ class App extends React.Component {
   }
 
   renderGuestsBasics () {
+    console.log('renderGB invoked()')
     return (
       <GuestsButton onClick={this.changeGuestsView}>
         <GuestsButtonDiv>
@@ -192,11 +204,20 @@ class App extends React.Component {
 
             <GuestsButtonPickerSpanGuestsConfigSpan>
               <span>
-                <GuestsButtonPickerSpanGuestsConfigInnerSpan> 1 room,</GuestsButtonPickerSpanGuestsConfigInnerSpan>
+                <GuestsButtonPickerSpanGuestsConfigInnerSpan>
+                  {this.state.userConfig.roomsNumber}
+                  {this.state.userConfig.roomsNumber > 1 ? ' rooms' : ' room'},
+                </GuestsButtonPickerSpanGuestsConfigInnerSpan>
 
-                <GuestsButtonPickerSpanGuestsConfigInnerSpan> 2 adults,</GuestsButtonPickerSpanGuestsConfigInnerSpan>
+                <GuestsButtonPickerSpanGuestsConfigInnerSpan>
+                  {this.state.userConfig.adultsNumber}
+                  {this.state.userConfig.adultsNumber > 1 ? ' adults' : ' adult'},
+                </GuestsButtonPickerSpanGuestsConfigInnerSpan>
 
-                <GuestsButtonPickerSpanGuestsConfigInnerSpan> 1 child</GuestsButtonPickerSpanGuestsConfigInnerSpan>
+                <GuestsButtonPickerSpanGuestsConfigInnerSpan>
+                  {this.state.userConfig.childrenNumber}
+                  {this.state.userConfig.childrenNumber > 1 ? ' children' : ' child'}
+                </GuestsButtonPickerSpanGuestsConfigInnerSpan>
               </span>
             </GuestsButtonPickerSpanGuestsConfigSpan>
 
@@ -227,6 +248,7 @@ class App extends React.Component {
       <Guests
         getUpdatedData={this.getUpdatedData}
         changeGuestsView={this.changeGuestsView}
+        updateGuestPickerInfo={this.updateGuestPickerInfo}
       />,
       document.getElementById('guests')
     );
