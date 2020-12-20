@@ -98,6 +98,7 @@ export const BestDealsEntityCancellationDiv = styled.div`
   line-height: 12px;
   font-size: 12px;
   color: #4a4a4a;
+  width: 100%;
 `;
 
 export const BestDealsEntityCancellationTextSpan = styled.span`

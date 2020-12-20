@@ -286,7 +286,10 @@ class App extends React.Component {
 
 
           <DealsWrapper>
-            <BestDeals currentHotel={this.state.currentHotel}/>
+            <BestDeals
+              currentHotel={this.state.currentHotel}
+              userDates={{checkIn: this.state.checkIn, checkOut: this.state.checkOut}}
+            />
             <AllDeals currentHotel={this.state.currentHotel}/>
           </DealsWrapper>
 
