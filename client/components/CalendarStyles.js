@@ -193,22 +193,6 @@ export const CalendarRow = styled.div`
     cursor: pointer;
     font-family: 'Poppins', sans-serif;
   }
-  .cell-inactive {
-    border: 1px solid grey;
-    background-color: #fff;
-    flex: 1 0;
-    display: inline-block;
-    height: 36px;
-    line-height: 36px;
-    font-size: 14px;
-    vertical-align: top;
-    position: relative;
-    z-index: 1;
-    border: 2px solid rgba(0,0,0,0);
-    margin: -2px 0 0 -2px;
-    cursor: pointer;
-    font-family: 'Poppins', sans-serif;
-  }
 
   .cell:hover {
     background: #00aa6c;
@@ -262,9 +246,28 @@ export const CalendarRow = styled.div`
     font-family: 'Poppins', sans-serif;
   }
 
+  .cell-inactive {
+    color: grey;
+    pointer-events: none;
+    border: 1px solid grey;
+    background-color: #fff;
+    flex: 1 0;
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    font-size: 14px;
+    vertical-align: top;
+    position: relative;
+    z-index: 1;
+    border: 2px solid rgba(0,0,0,0);
+    margin: -2px 0 0 -2px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+  }
+
   .cell-disabled {
     background-color: white;
-    color: white;
+    color: gainsboro;
     pointer-events: none;
     flex: 1 0;
     display: inline-block;

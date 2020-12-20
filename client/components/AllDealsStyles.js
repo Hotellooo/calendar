@@ -34,7 +34,6 @@ export const AllDealsEntityInner = styled.div`
   line-height: 1.5em;
   cursor: pointer;
   font-size: 12px;
-
 `;
 
 export const AllDealsEntityServiceSpan = styled.span`
@@ -82,9 +81,7 @@ export const AllDealsEntityPriceSpan = styled.span`
   padding-left: 3px;
   font-weight: 700;
   color: #000a12;
-
   min-height: 18px;
-
 `;
 
 export const AllDealsBottomDiv = styled.div`
