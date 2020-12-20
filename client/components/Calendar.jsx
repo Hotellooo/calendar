@@ -1,9 +1,8 @@
 import React from 'react';
 import moment from 'moment';
-import { CalendarPortalWrapper, CalendarHeader, CalendarLegendDiv, CalendarLegendSpan, CheckInContainer, CheckInWrapper, CalendarMonths, CalendarNavBar, CalendarNavBarButton, CalendarNavBarButtonIcon, CalendarGrid, CalendarCaption, CalendarWeekdays, CalendarBody, WeekDaysRow, WeekDay, CalendarRow, CalendarCell, CalendarAverageSection, CalendarAverageSectionSpan, CalendarMonthsDiv, CalendarAverageSectionMsgSpan, CalendarHeaderTop, CalendarHeaderTopText, CloseButton
-
+import {
+  CalendarPortalWrapper, CalendarHeader, CalendarLegendDiv, CalendarLegendSpan, CheckInContainer, CheckInWrapper, CalendarMonths, CalendarNavBar, CalendarNavBarButton, CalendarNavBarButtonIcon, CalendarGrid, CalendarCaption, CalendarWeekdays, CalendarBody, WeekDaysRow, WeekDay, CalendarRow, CalendarCell, CalendarAverageSection, CalendarAverageSectionSpan, CalendarMonthsDiv, CalendarAverageSectionMsgSpan, CalendarHeaderTop, CalendarHeaderTopText, CloseButton
 } from './CalendarStyles.js';
-
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import moment from 'moment';
 import {
   BestDealsEntityDiv, BestDealsEntityHeadDiv, BestDealsEntityLogoDiv, BestDealsEntityPriceDiv, BestDealsEntityButton, BestDealsEntityLogoPicture, BestDealsEntityPriceInnerDiv, BestDealsEntityPriceInnerDivQuote, BestDealsEntityButtonDiv, BestDealsEntityButtonDivSpan, BestDealsEntityBottomDiv, BestDealsEntityCancellationDiv, BestDealsEntityCancellationTextSpan
-
 } from './BestDealsEntityStyles.js';
-
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 

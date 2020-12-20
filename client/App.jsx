@@ -10,7 +10,7 @@ import getDataFromServer from './lib/getDataFromServer.js';
 import getUpdatedDataFromServer from './lib/getUpdatedDataFromServer.js';
 import styled from 'styled-components';
 import {MainWrapper, AppWrapper, HeaderWrapper, HeaderTextBlock, HeaderIconSpan, HeaderTextSpan, CalendarGuestsWrapper, DatePickerWrapper, GuestsWrapper, GuestsButton, GuestsButtonDiv, GuestsButtonIconSpan, GuestsButtonPickerSpan, GuestsButtonPickerSpanGuestsSpan, GuestsButtonPickerSpanGuestsConfigSpan, GuestsButtonPickerSpanGuestsConfigInnerSpan, DatePickerButton, DatePickerButtonDiv, DatePickerButtonDivIconSpan, DatePickerButtonDivFieldSpan, DatePickerButtonDivFieldSpanCheckIn, DatePickerButtonDivFieldSpanDate,
-  BestDealsWrapper, DealsWrapper} from './AppStyles.js';
+  BestDealsWrapper, DealsWrapper, Img} from './AppStyles.js';
 
 import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -87,12 +87,14 @@ class App extends React.Component {
         this.setState({
           currentHotel: hotel,
           calendarView: false,
-          guestsView: !this.state.guestsView
+          guestsView: !this.state.guestsView,
+          msg: ''
         });
       } else {
         this.setState({
           currentHotel: hotel,
-          guestsView: false
+          guestsView: false,
+          msg: ''
         });
       }
     }
@@ -238,7 +240,6 @@ class App extends React.Component {
           {this.renderGuestsBasics()}
           {this.renderGuestsPortal()}
         </div>
-
       );
     }
   }

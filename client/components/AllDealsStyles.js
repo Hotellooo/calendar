@@ -127,7 +127,6 @@ export const ViewAllPortalWrapper = styled.div`
   border-width: 1px;
   border-style: solid;
   border-color: #e0e0e0;
-  //think
   position: absolute;
   z-index: 25;
   top:450px;
@@ -194,8 +193,8 @@ export const PopupWrapper = styled.div`
   border: 1px solid #e0e0e0;
   position: absolute;
   z-index: 25;
-  top:520px;
-  left: 390px;
+  top: 380px;
+  left: 420px;
   width: 300px;
   height: auto;
 `;

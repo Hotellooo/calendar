@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const AppWrapper = styled.div`
   background-color: lightblue;
-  width: 395px;
-  height: auto;
+  min-width: 395px;
+  height: 478px;
   padding: 4px 16px 0;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
   min-height: 430px;
@@ -205,18 +205,21 @@ export const GuestsButtonPickerSpanGuestsConfigInnerSpan = styled.span`
 `;
 
 export const HeaderWrapper = styled.div`
-  height: 44px;
-  margin: 8px 0;
+  // height: 44px;
+  margin-bottom: 8px;
+  margin-top: 0px;
   font-size: 16px;
   line-height: 42px;
   font-weight: 700;
   text-align: center;
   white-space: normal;
+
+  height: 30px;
 `;
 
 export const HeaderTextBlock = styled.div`
   display: inline-block;
-  vertical-align: middle;
+  // vertical-align: top;
   font-size: 15px;
   line-height: 26px;
   font-weight: 700;
@@ -224,6 +227,8 @@ export const HeaderTextBlock = styled.div`
   background: #fff;
   text-align: center;
 
+  vertical-align: top;
+  height: 27px;
 `;
 
 export const HeaderIconSpan = styled.span`
@@ -250,4 +255,3 @@ export const MainWrapper = styled.div`
   height: 507px;
   font-family: 'Poppins', sans-serif;
 `;
-

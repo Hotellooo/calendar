@@ -1,8 +1,9 @@
 import React from 'react';
 import Children from './Children.jsx';
 import styled from 'styled-components';
-import {GuestsWrapper, GuestsInnerLine, GuestsInnerLineConfig, GuestsInnerLineConfigButton, GuestsInnerLineConfigField, GuestsInnerLineConfigButtonSpan, GuestsInnerLineLabel, GuestsInnerLineLabelIcon, CloseButton, UpdateButtonDiv, UpdateButton} from './GuestsStyles.js';
-
+import {
+  GuestsWrapper, GuestsInnerLine, GuestsInnerLineConfig, GuestsInnerLineConfigButton, GuestsInnerLineConfigField, GuestsInnerLineConfigButtonSpan, GuestsInnerLineLabel, GuestsInnerLineLabelIcon, CloseButton, UpdateButtonDiv, UpdateButton
+} from './GuestsStyles.js';
 import { faMinus, faPlus, faBed, faUserFriends, faChild} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -85,14 +86,12 @@ class Guests extends React.Component {
             </GuestsInnerLineConfigButton>
           </GuestsInnerLineConfig>
 
-
           <GuestsInnerLineLabel>
             <GuestsInnerLineLabelIcon>
               {this.renderIcon(links.state[i])}
             </GuestsInnerLineLabelIcon>
             {links.labels[i]}
           </GuestsInnerLineLabel>
-
 
         </GuestsInnerLine>
 

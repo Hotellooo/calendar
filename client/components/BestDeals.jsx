@@ -2,7 +2,7 @@ import React from 'react';
 import BestDealsEntity from './BestDealsEntity.jsx';
 import getBestOrRestDeals from '../lib/getBestOrRestDeals.js';
 import styled from 'styled-components';
-import {BestDealsWrapper} from './BestDealsStyles.js';
+import { BestDealsWrapper } from './BestDealsStyles.js';
 
 const BestDeals = ({ currentHotel, userDates }) => {
   if (currentHotel.length === 0 || !currentHotel) {
@@ -23,7 +23,6 @@ const BestDeals = ({ currentHotel, userDates }) => {
       </div>
     );
   }
-
 };
 
 export default BestDeals;

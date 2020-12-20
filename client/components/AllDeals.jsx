@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import getBestOrRestDeals from '../lib/getBestOrRestDeals.js';
 import styled from 'styled-components';
-import {AllDealsWrapper, AllDealsMainDiv, AllDealsBottomDiv, AllDealsEntityOuter, AllDealsEntityInner, AllDealsEntityServiceSpan, AllDealsEntityPriceSpan, AllDealsEntityServiceNameSpan, AllDealsEntityServiceIconSpan, ViewAllWrapper, ViewAllDiv, ViewAllPortalWrapper, ViewAllPortal, ViewAllPortalLine, ViewPortalLineDiv, ViewPortalLineNameSpan, ViewPortalLinePriceSpan, ViewAllPortalLineIconSpan, ViewAllPortalLineInnerDiv, PopupWrapper, PopupTextDiv } from './AllDealsStyles.js';
+import {
+  AllDealsWrapper, AllDealsMainDiv, AllDealsBottomDiv, AllDealsEntityOuter, AllDealsEntityInner, AllDealsEntityServiceSpan, AllDealsEntityPriceSpan, AllDealsEntityServiceNameSpan, AllDealsEntityServiceIconSpan, ViewAllWrapper, ViewAllDiv, ViewAllPortalWrapper, ViewAllPortal, ViewAllPortalLine, ViewPortalLineDiv, ViewPortalLineNameSpan, ViewPortalLinePriceSpan, ViewAllPortalLineIconSpan, ViewAllPortalLineInnerDiv, PopupWrapper, PopupTextDiv
+} from './AllDealsStyles.js';
 import AllDealsStyles from './AllDealsStyles.js';
 import { faCaretDown, faExternalLinkAlt, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -44,9 +46,7 @@ class AllDeals extends React.Component {
                 </AllDealsEntityServiceIconSpan>
               </AllDealsEntityServiceSpan>
 
-
               <AllDealsEntityPriceSpan>${sorted[i].price}</AllDealsEntityPriceSpan>
-
 
             </AllDealsEntityInner>
           </AllDealsEntityOuter>
@@ -61,16 +61,11 @@ class AllDeals extends React.Component {
   }
 
   togglePopup () {
-    this.setState({
-      popUpVis: !this.state.popUpVis
-    });
+    this.setState({ popUpVis: !this.state.popUpVis });
   }
 
   onClickHandler () {
-    this.setState({
-      isClicked: !this.state.isClicked,
-      allDealsView: !this.state.allDealsView
-    });
+    this.setState({ isClicked: !this.state.isClicked, allDealsView: !this.state.allDealsView });
   }
 
   renderPopupPortal (flag) {
@@ -79,8 +74,7 @@ class AllDeals extends React.Component {
         <PopupTextDiv>
         Prices are the average nightly price provided by our partners and may not include all taxes and fees. Taxes and fees that are shown are estimates only. Please see our partners for more details.
         </PopupTextDiv>
-      </PopupWrapper>
-      ,
+      </PopupWrapper>,
       document.getElementById('popup')) : null;
   }
 
@@ -92,7 +86,6 @@ class AllDeals extends React.Component {
       let rates = [];
       for (var i = hotels[0].prices.length - 1; i >= 0; i--) {
         rates.push(
-
           <div key={i}>
             <ViewPortalLineDiv>
               <ViewAllPortalLineInnerDiv>
@@ -111,18 +104,14 @@ class AllDeals extends React.Component {
               </ViewPortalLinePriceSpan>
 
             </ViewPortalLineDiv>
-
           </div>
-
         );
       }
       return ReactDOM.createPortal(
         <ViewAllPortalWrapper>
           <ViewAllPortal>
             <ViewAllPortalLine>
-              <div>
-                {rates}
-              </div>
+              <div>{rates}</div>
             </ViewAllPortalLine>
           </ViewAllPortal>
         </ViewAllPortalWrapper>
@@ -148,7 +137,7 @@ class AllDeals extends React.Component {
         </ViewAllWrapper>
 
         <AllDealsBottomDiv onMouseOver={this.togglePopup} onMouseOut={this.togglePopup}>
-        Prices are the average nightly price provided by our partners and may not include all taxes and fees. Taxes and fees that are shown are estimates only. Please see our partners for more details.
+          Prices are the average nightly price provided by our partners and may not include all taxes and fees. Taxes and fees that are shown are estimates only. Please see our partners for more details.
         </AllDealsBottomDiv>
       </AllDealsWrapper>
 
@@ -159,7 +148,6 @@ class AllDeals extends React.Component {
     if (!this.state.allDealsView) {
       return (this.renderAllDealsBasics());
     }
-
     if (this.state.allDealsView) {
       return (
         <div>
