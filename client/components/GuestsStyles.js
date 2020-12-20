@@ -38,7 +38,7 @@ export const GuestsWrapper = styled.div`
     position: absolute;
     z-index: 25;
     top: 50px;
-    left:400px;
+    left:435px;
     max-height: auto;
 `;
 

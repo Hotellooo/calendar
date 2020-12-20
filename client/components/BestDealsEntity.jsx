@@ -1,16 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 import {
   BestDealsEntityDiv, BestDealsEntityHeadDiv, BestDealsEntityLogoDiv, BestDealsEntityPriceDiv, BestDealsEntityButton, BestDealsEntityLogoPicture, BestDealsEntityPriceInnerDiv, BestDealsEntityPriceInnerDivQuote, BestDealsEntityButtonDiv, BestDealsEntityButtonDivSpan, BestDealsEntityBottomDiv, BestDealsEntityCancellationDiv, BestDealsEntityCancellationTextSpan
-  // BestDealsEntityNoticeDiv
-
 } from './BestDealsEntityStyles.js';
-
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const BestDealsEntity = ({item}) => {
-
+const BestDealsEntity = ({ item, userDates }) => {
   const chooseLogo = (item) => {
     const links = {
       'Hotels.com': 'https://static.tacdn.com/img2/branding/hotels/Hotelscom_384x164.png',
@@ -27,6 +24,12 @@ const BestDealsEntity = ({item}) => {
     return (
       <BestDealsEntityLogoPicture src={links[item.serviceName]}></BestDealsEntityLogoPicture>
     );
+  };
+
+  const calcFreeCancel = ({ checkIn }) => {
+    let result = 'Free cancellation ';
+    if (checkIn) result += 'until ' + moment(checkIn).subtract(2, 'days').format('MM/DD/YY');
+    return result;
   };
 
   return (
@@ -53,7 +56,9 @@ const BestDealsEntity = ({item}) => {
         <BestDealsEntityBottomDiv>
           <BestDealsEntityCancellationDiv>
             <FontAwesomeIcon icon={faCheck}/>
-            <BestDealsEntityCancellationTextSpan type="fat">Free cancellation until 09/22/20</BestDealsEntityCancellationTextSpan>
+            <BestDealsEntityCancellationTextSpan type="fat">
+              {calcFreeCancel(userDates)}
+            </BestDealsEntityCancellationTextSpan>
           </BestDealsEntityCancellationDiv>
 
           <BestDealsEntityCancellationDiv>

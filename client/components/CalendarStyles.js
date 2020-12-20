@@ -30,6 +30,33 @@ export const CalendarHeader = styled.div`
   text-align: center;
 `;
 
+export const CalendarHeaderTop = styled.div`
+`;
+
+export const CalendarHeaderTopText = styled.span`
+`;
+
+export const CloseButton = styled.button`
+  &:before {
+    content: "x";
+    font-size: 18px;
+    line-height: 36px;
+    color:#4a4a4a;
+  }
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    text-align: center;
+    transition: opacity .2s;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    background: #fff;
+    padding: 0;
+`;
+
 export const CalendarLegendDiv = styled.div`
   padding-top: 4px;
   font-size: 12px;
@@ -166,22 +193,6 @@ export const CalendarRow = styled.div`
     cursor: pointer;
     font-family: 'Poppins', sans-serif;
   }
-  .cell-inactive {
-    border: 1px solid grey;
-    background-color: #fff;
-    flex: 1 0;
-    display: inline-block;
-    height: 36px;
-    line-height: 36px;
-    font-size: 14px;
-    vertical-align: top;
-    position: relative;
-    z-index: 1;
-    border: 2px solid rgba(0,0,0,0);
-    margin: -2px 0 0 -2px;
-    cursor: pointer;
-    font-family: 'Poppins', sans-serif;
-  }
 
   .cell:hover {
     background: #00aa6c;
@@ -235,9 +246,28 @@ export const CalendarRow = styled.div`
     font-family: 'Poppins', sans-serif;
   }
 
+  .cell-inactive {
+    color: grey;
+    pointer-events: none;
+    border: 1px solid grey;
+    background-color: #fff;
+    flex: 1 0;
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    font-size: 14px;
+    vertical-align: top;
+    position: relative;
+    z-index: 1;
+    border: 2px solid rgba(0,0,0,0);
+    margin: -2px 0 0 -2px;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+  }
+
   .cell-disabled {
     background-color: white;
-    color: white;
+    color: gainsboro;
     pointer-events: none;
     flex: 1 0;
     display: inline-block;
@@ -315,9 +345,18 @@ export const CalendarAverageSection = styled.div`
   position:absolute;
   bottom:0;
   width: 90%;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const CalendarAverageSectionSpan = styled.span`
   color: #4a4a4a;
   font-size: 12px;
 `;
+
+export const CalendarAverageSectionMsgSpan = styled.span`
+  color: red;
+  font-size: 12px;
+`;
+
+

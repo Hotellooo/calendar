@@ -2,23 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import getBestOrRestDeals from '../lib/getBestOrRestDeals.js';
 import styled from 'styled-components';
-import {AllDealsWrapper, AllDealsMainDiv, AllDealsBottomDiv, AllDealsEntityOuter, AllDealsEntityInner, AllDealsEntityServiceSpan, AllDealsEntityPriceSpan, AllDealsEntityServiceNameSpan, AllDealsEntityServiceIconSpan, ViewAllWrapper, ViewAllDiv, ViewAllPortalWrapper, ViewAllPortal, ViewAllPortalLine, ViewPortalLineDiv, ViewPortalLineNameSpan, ViewPortalLinePriceSpan, ViewAllPortalLineIconSpan, ViewAllPortalLineInnerDiv} from './AllDealsStyles.js';
+import {
+  AllDealsWrapper, AllDealsMainDiv, AllDealsBottomDiv, AllDealsEntityOuter, AllDealsEntityInner, AllDealsEntityServiceSpan, AllDealsEntityPriceSpan, AllDealsEntityServiceNameSpan, AllDealsEntityServiceIconSpan, ViewAllWrapper, ViewAllDiv, ViewAllPortalWrapper, ViewAllPortal, ViewAllPortalLine, ViewPortalLineDiv, ViewPortalLineNameSpan, ViewPortalLinePriceSpan, ViewAllPortalLineIconSpan, ViewAllPortalLineInnerDiv, PopupWrapper, PopupTextDiv
+} from './AllDealsStyles.js';
 import AllDealsStyles from './AllDealsStyles.js';
-import { faCaretDown, faExternalLinkAlt} from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faExternalLinkAlt, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class AllDeals extends React.Component {
   constructor (props) {
     super(props);
-
     this.state = {
       isClicked: false,
-      allDealsView: false
+      allDealsView: false,
+      popUpVis: false
     };
-
     this.renderFour = this.renderFour.bind(this);
     this.onClickHandler = this.onClickHandler.bind(this);
     this.renderAllDealsBasics = this.renderAllDealsBasics.bind(this);
+    this.renderPrice = this.renderPrice.bind(this);
+    this.togglePopup = this.togglePopup.bind(this);
   }
 
   renderFour (hotels) {
@@ -43,7 +46,6 @@ class AllDeals extends React.Component {
                 </AllDealsEntityServiceIconSpan>
               </AllDealsEntityServiceSpan>
 
-
               <AllDealsEntityPriceSpan>${sorted[i].price}</AllDealsEntityPriceSpan>
 
             </AllDealsEntityInner>
@@ -54,11 +56,26 @@ class AllDeals extends React.Component {
     }
   }
 
+  renderPrice (price) {
+    return price ? `$${price}` : <FontAwesomeIcon icon={faTimesCircle} size='sm' color='grey'/>;
+  }
+
+  togglePopup () {
+    this.setState({ popUpVis: !this.state.popUpVis });
+  }
+
   onClickHandler () {
-    this.setState({
-      isClicked: !this.state.isClicked,
-      allDealsView: !this.state.allDealsView
-    });
+    this.setState({ isClicked: !this.state.isClicked, allDealsView: !this.state.allDealsView });
+  }
+
+  renderPopupPortal (flag) {
+    return flag ? ReactDOM.createPortal(
+      <PopupWrapper>
+        <PopupTextDiv>
+        Prices are the average nightly price provided by our partners and may not include all taxes and fees. Taxes and fees that are shown are estimates only. Please see our partners for more details.
+        </PopupTextDiv>
+      </PopupWrapper>,
+      document.getElementById('popup')) : null;
   }
 
   renderAll () {
@@ -69,13 +86,12 @@ class AllDeals extends React.Component {
       let rates = [];
       for (var i = hotels[0].prices.length - 1; i >= 0; i--) {
         rates.push(
-
           <div key={i}>
             <ViewPortalLineDiv>
               <ViewAllPortalLineInnerDiv>
 
                 <ViewPortalLineNameSpan>
-                  {hotels[0].prices[i].serviceName}
+                  {hotels[0].prices[i].serviceName + ' '}
                 </ViewPortalLineNameSpan>
 
                 <ViewAllPortalLineIconSpan>
@@ -84,22 +100,18 @@ class AllDeals extends React.Component {
               </ViewAllPortalLineInnerDiv>
 
               <ViewPortalLinePriceSpan>
-              ${hotels[0].prices[i].price}
+                {this.renderPrice(hotels[0].prices[i].price)}
               </ViewPortalLinePriceSpan>
 
             </ViewPortalLineDiv>
-
           </div>
-
         );
       }
       return ReactDOM.createPortal(
         <ViewAllPortalWrapper>
           <ViewAllPortal>
             <ViewAllPortalLine>
-              <div>
-                {rates}
-              </div>
+              <div>{rates}</div>
             </ViewAllPortalLine>
           </ViewAllPortal>
         </ViewAllPortalWrapper>
@@ -124,10 +136,9 @@ class AllDeals extends React.Component {
           </ViewAllDiv>
         </ViewAllWrapper>
 
-        <AllDealsBottomDiv>
-        Prices are the average nightly price provided by our partners and may not include all taxes and fees. Taxes and fees that are shown are estimates only. Please see our partners for more details.
+        <AllDealsBottomDiv onMouseOver={this.togglePopup} onMouseOut={this.togglePopup}>
+          Prices are the average nightly price provided by our partners and may not include all taxes and fees. Taxes and fees that are shown are estimates only. Please see our partners for more details.
         </AllDealsBottomDiv>
-
       </AllDealsWrapper>
 
     );
@@ -137,7 +148,6 @@ class AllDeals extends React.Component {
     if (!this.state.allDealsView) {
       return (this.renderAllDealsBasics());
     }
-
     if (this.state.allDealsView) {
       return (
         <div>
@@ -152,6 +162,7 @@ class AllDeals extends React.Component {
     return (
       <div>
         {this.renderAllDeals()}
+        {this.renderPopupPortal(this.state.popUpVis)}
       </div>
     );
   }

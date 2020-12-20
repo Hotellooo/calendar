@@ -10,11 +10,10 @@ import getDataFromServer from './lib/getDataFromServer.js';
 import getUpdatedDataFromServer from './lib/getUpdatedDataFromServer.js';
 import styled from 'styled-components';
 import {MainWrapper, AppWrapper, HeaderWrapper, HeaderTextBlock, HeaderIconSpan, HeaderTextSpan, CalendarGuestsWrapper, DatePickerWrapper, GuestsWrapper, GuestsButton, GuestsButtonDiv, GuestsButtonIconSpan, GuestsButtonPickerSpan, GuestsButtonPickerSpanGuestsSpan, GuestsButtonPickerSpanGuestsConfigSpan, GuestsButtonPickerSpanGuestsConfigInnerSpan, DatePickerButton, DatePickerButtonDiv, DatePickerButtonDivIconSpan, DatePickerButtonDivFieldSpan, DatePickerButtonDivFieldSpanCheckIn, DatePickerButtonDivFieldSpanDate,
-  BestDealsWrapper, DealsWrapper} from './AppStyles.js';
+  BestDealsWrapper, DealsWrapper, Img} from './AppStyles.js';
 
-import { faCalendarAlt} from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 
 class App extends React.Component {
   constructor (props) {
@@ -26,6 +25,12 @@ class App extends React.Component {
       currentHotel: [],
       checkIn: false,
       checkOut: false,
+      msg: '',
+      userConfig: {
+        roomsNumber: 1,
+        adultsNumber: 2,
+        childrenNumber: 1
+      }
     };
     this.getData = this.getData.bind(this);
     this.getUpdatedData = this.getUpdatedData.bind(this);
@@ -34,10 +39,13 @@ class App extends React.Component {
     this.changeCalendarView = this.changeCalendarView.bind(this);
     this.renderGuests = this.renderGuests.bind(this);
     this.changeGuestsView = this.changeGuestsView.bind(this);
+    this.handleResponse = this.handleResponse.bind(this);
+    this.displayNotAvailableMsg = this.displayNotAvailableMsg.bind(this);
+    this.updateGuestPickerInfo = this.updateGuestPickerInfo.bind(this);
   }
 
   componentDidMount () {
-    this.getData('63');
+    this.getData(60);
   }
 
   getData (term) {
@@ -58,44 +66,47 @@ class App extends React.Component {
         checkOut: query.checkOut
       });
     }
-    if (!query.guestsNumber) {
-      query.guestsNumber = 2;
-    }
-    if (!query.roomsNumber) {
-      query.roomsNumber = 1;
-    }
+    if (!query.guestsNumber) query.guestsNumber = 2;
+    if (!query.roomsNumber) query.roomsNumber = 1;
     if (!query.checkIn) {
-      if (!this.state.checkIn) {
-        query.checkIn = moment().format('YYYY-MM-DD');
-      } else {
-        query.checkIn = this.state.checkIn;
-      }
+      if (!this.state.checkIn) query.checkIn = moment().format('YYYY-MM-DD');
+      else query.checkIn = this.state.checkIn;
     }
     if (!query.checkOut) {
-      if (!this.state.checkOut) {
-        query.checkOut = moment().add(1, 'day').format('YYYY-MM-DD');
+      if (!this.state.checkOut) query.checkOut = moment().add(1, 'day').format('YYYY-MM-DD');
+      else query.checkOut = this.state.checkOut;
+    }
+    getUpdatedDataFromServer(query, this.handleResponse);
+  }
+
+  handleResponse (hotel) {
+    if (hotel[0]['err_msg']) {
+      this.setState({ msg: hotel[0]['err_msg'] });
+    } else {
+      if (this.state.calendarView) {
+        this.setState({
+          currentHotel: hotel,
+          calendarView: false,
+          guestsView: !this.state.guestsView,
+          msg: ''
+        });
       } else {
-        query.checkOut = this.state.checkOut;
+        this.setState({
+          currentHotel: hotel,
+          guestsView: false,
+          msg: ''
+        });
       }
     }
-    const response = getUpdatedDataFromServer(query);
-    response.then((hotel) => {
-      if (hotel[0]['err_msg']) {
-        console.log(hotel[0]['err_msg']);
-      } else {
-        if (this.state.calendarView) {
-          this.setState({
-            currentHotel: hotel,
-            calendarView: false,
-            guestsView: !this.state.guestsView
-          });
-        } else {
-          this.setState({
-            currentHotel: hotel,
-            guestsView: false
-          });
-        }
-      }
+  }
+
+  displayNotAvailableMsg () {
+    return this.state.msg.length ? this.state.msg : null;
+  }
+
+  updateGuestPickerInfo ({adultsNumber, childrenNumber, roomsNumber}) {
+    this.setState({
+      userConfig: { roomsNumber, adultsNumber, childrenNumber }
     });
   }
 
@@ -103,20 +114,11 @@ class App extends React.Component {
     if (!this.state.currentHotel[0]) {
       return 'Loading...';
     } else {
-      const prices = this.state.currentHotel[0].prices;
-      let smallest = prices[0];
-      let biggest = prices[1];
-      for (let i = 0; i < prices.length; i++) {
-        if (prices[i].price) {
-          if (prices[i].price < smallest) {
-            smallest = prices[i].price;
-          }
-          if (prices[i].price > biggest) {
-            biggest = prices[i].price;
-          }
-        }
-      }
-      return `$${smallest.price} - $${biggest.price}`;
+      const prices = [];
+      this.state.currentHotel[0].prices.forEach((elem) => {
+        if (elem.price !== 0) prices.push(elem.price);
+      });
+      return `$${Math.min(...prices)} - $${Math.max(...prices)}`;
     }
   }
 
@@ -169,22 +171,18 @@ class App extends React.Component {
 
   renderCalendarPortal () {
     return ReactDOM.createPortal(
-      <Calendar getUpdatedData={this.getUpdatedData} calculateAvrgRate={this.calculateAvrgRate}/>
-      , document.getElementById('calendar'));
+      <Calendar
+        getUpdatedData={this.getUpdatedData}
+        calculateAvrgRate={this.calculateAvrgRate}
+        displayNotAvailableMsg={this.displayNotAvailableMsg}
+        changeCalendarView={this.changeCalendarView}
+      />,
+      document.getElementById('calendar'));
   }
 
   renderCalendar () {
-    if (!this.state.calendarView) {
-      return this.renderCalendarBasics();
-    }
-    if (this.state.calendarView) {
-      return (
-        <div>
-          {this.renderCalendarBasics()}
-          {this.renderCalendarPortal()}
-        </div>
-      );
-    }
+    return !this.state.calendarView ? this.renderCalendarBasics() :
+      (<div>{this.renderCalendarBasics()}{this.renderCalendarPortal()}</div>);
   }
 
   changeGuestsView () {
@@ -195,29 +193,40 @@ class App extends React.Component {
 
   renderGuestsBasics () {
     return (
-      <GuestsButton onClick={this.changeGuestsView}>
-        <GuestsButtonDiv>
-          <GuestsButtonIconSpan></GuestsButtonIconSpan>
+      <div>
+        <GuestsButton onClick={this.changeGuestsView}>
+          <GuestsButtonDiv>
+            <GuestsButtonIconSpan></GuestsButtonIconSpan>
 
-          <GuestsButtonPickerSpan>
+            <GuestsButtonPickerSpan>
 
-            <GuestsButtonPickerSpanGuestsSpan>Guests
-            </GuestsButtonPickerSpanGuestsSpan>
+              <GuestsButtonPickerSpanGuestsSpan>Guests
+              </GuestsButtonPickerSpanGuestsSpan>
 
-            <GuestsButtonPickerSpanGuestsConfigSpan>
-              <span>
-                <GuestsButtonPickerSpanGuestsConfigInnerSpan> 1 room,</GuestsButtonPickerSpanGuestsConfigInnerSpan>
+              <GuestsButtonPickerSpanGuestsConfigSpan>
+                <span>
+                  <GuestsButtonPickerSpanGuestsConfigInnerSpan>
+                    {this.state.userConfig.roomsNumber}
+                    {this.state.userConfig.roomsNumber > 1 ? ' rooms, ' : ' room, '}
+                  </GuestsButtonPickerSpanGuestsConfigInnerSpan>
 
-                <GuestsButtonPickerSpanGuestsConfigInnerSpan> 2 adults,</GuestsButtonPickerSpanGuestsConfigInnerSpan>
+                  <GuestsButtonPickerSpanGuestsConfigInnerSpan>
+                    {this.state.userConfig.adultsNumber}
+                    {this.state.userConfig.adultsNumber > 1 ? ' adults, ' : ' adult, '}
+                  </GuestsButtonPickerSpanGuestsConfigInnerSpan>
 
-                <GuestsButtonPickerSpanGuestsConfigInnerSpan> 1 child</GuestsButtonPickerSpanGuestsConfigInnerSpan>
-              </span>
-            </GuestsButtonPickerSpanGuestsConfigSpan>
+                  <GuestsButtonPickerSpanGuestsConfigInnerSpan>
+                    {this.state.userConfig.childrenNumber}
+                    {this.state.userConfig.childrenNumber > 1 ? ' children' : ' child'}
+                  </GuestsButtonPickerSpanGuestsConfigInnerSpan>
+                </span>
+              </GuestsButtonPickerSpanGuestsConfigSpan>
 
-          </GuestsButtonPickerSpan>
+            </GuestsButtonPickerSpan>
 
-        </GuestsButtonDiv>
-      </GuestsButton>
+          </GuestsButtonDiv>
+        </GuestsButton>
+      </div>
     );
   }
 
@@ -231,14 +240,17 @@ class App extends React.Component {
           {this.renderGuestsBasics()}
           {this.renderGuestsPortal()}
         </div>
-
       );
     }
   }
 
   renderGuestsPortal () {
     return ReactDOM.createPortal(
-      <Guests getUpdatedData={this.getUpdatedData} changeGuestsView={this.changeGuestsView}/>,
+      <Guests
+        getUpdatedData={this.getUpdatedData}
+        changeGuestsView={this.changeGuestsView}
+        updateGuestPickerInfo={this.updateGuestPickerInfo}
+      />,
       document.getElementById('guests')
     );
   }
@@ -275,7 +287,10 @@ class App extends React.Component {
 
 
           <DealsWrapper>
-            <BestDeals currentHotel={this.state.currentHotel}/>
+            <BestDeals
+              currentHotel={this.state.currentHotel}
+              userDates={{checkIn: this.state.checkIn, checkOut: this.state.checkOut}}
+            />
             <AllDeals currentHotel={this.state.currentHotel}/>
           </DealsWrapper>
 

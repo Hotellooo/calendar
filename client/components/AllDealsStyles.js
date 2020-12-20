@@ -34,7 +34,6 @@ export const AllDealsEntityInner = styled.div`
   line-height: 1.5em;
   cursor: pointer;
   font-size: 12px;
-
 `;
 
 export const AllDealsEntityServiceSpan = styled.span`
@@ -62,8 +61,6 @@ export const AllDealsEntityServiceIconSpan = styled.span`
   font-style: normal;
   font-weight: 400;
   line-height: 1;
-  // content:'➚';
-  // content:'⇱';
 }
   display: flex;
   color: #4a4a4a;
@@ -84,9 +81,7 @@ export const AllDealsEntityPriceSpan = styled.span`
   padding-left: 3px;
   font-weight: 700;
   color: #000a12;
-
   min-height: 18px;
-
 `;
 
 export const AllDealsBottomDiv = styled.div`
@@ -132,7 +127,6 @@ export const ViewAllPortalWrapper = styled.div`
   border-width: 1px;
   border-style: solid;
   border-color: #e0e0e0;
-  //think
   position: absolute;
   z-index: 25;
   top:450px;
@@ -189,4 +183,25 @@ export const ViewPortalLinePriceSpan = styled.span`
 
 export const ViewAllPortalLineIconSpan = styled.span`
   color: black;
+`;
+
+export const PopupWrapper = styled.div`
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
+  box-sizing: border-box;
+  border-radius: 2px;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  position: absolute;
+  z-index: 25;
+  top: 380px;
+  left: 420px;
+  width: 300px;
+  height: auto;
+`;
+
+export const PopupTextDiv = styled.div`
+  margin: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  color: grey;
 `;

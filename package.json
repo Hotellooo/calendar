@@ -19,7 +19,8 @@
   "scripts": {
     "start": "nodemon server/index.js",
     "db-seed": "node database/seed.js",
-    "lint": "eslint client --ext .jsx server --ext .js database --ext .js test --ext .js --fix",
+    "lint": "eslint client --ext .jsx server --ext .js database --ext .js test --ext .js",
+    "lint-fix": "eslint client --ext .jsx server --ext .js database --ext .js test --ext .js --fix",
     "react-dev": "webpack --config webpack.dev.js -d --watch",
     "build": "webpack --config webpack.prod.js",
     "test:watch": "jest --watchAll",

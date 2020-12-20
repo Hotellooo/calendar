@@ -1,9 +1,8 @@
 import React from 'react';
 import moment from 'moment';
-import {CalendarPortalWrapper, CalendarHeader, CalendarLegendDiv, CalendarLegendSpan, CheckInContainer, CheckInWrapper, CalendarMonths, CalendarNavBar, CalendarNavBarButton, CalendarNavBarButtonIcon, CalendarGrid, CalendarCaption, CalendarWeekdays, CalendarBody, WeekDaysRow, WeekDay, CalendarRow, CalendarCell, CalendarAverageSection, CalendarAverageSectionSpan, CalendarMonthsDiv
-
+import {
+  CalendarPortalWrapper, CalendarHeader, CalendarLegendDiv, CalendarLegendSpan, CheckInContainer, CheckInWrapper, CalendarMonths, CalendarNavBar, CalendarNavBarButton, CalendarNavBarButtonIcon, CalendarGrid, CalendarCaption, CalendarWeekdays, CalendarBody, WeekDaysRow, WeekDay, CalendarRow, CalendarCell, CalendarAverageSection, CalendarAverageSectionSpan, CalendarMonthsDiv, CalendarAverageSectionMsgSpan, CalendarHeaderTop, CalendarHeaderTopText, CloseButton
 } from './CalendarStyles.js';
-
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -11,9 +10,10 @@ class Calendar extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      currentMonth: moment(new Date()),
-      selectedDate: moment(new Date()),
-      nextMonth: moment(new Date()).add(1, 'month'),
+      now: moment(),
+      currentMonth: moment(),
+      selectedDate: moment(),
+      nextMonth: moment().add(1, 'month'),
       checkIn: false,
       checkOut: false,
       clickCounter: 0,
@@ -27,7 +27,6 @@ class Calendar extends React.Component {
 
   renderNavbar () {
     const dateFormat = 'MMMM yyyy';
-
     return (
       <div className="navbar-container">
         <div className="col">
@@ -55,34 +54,27 @@ class Calendar extends React.Component {
   renderWeekDays (term) {
     const dateFormat = 'ddd';
     const days = [];
-
     let startDate;
     term === this.state.currentMonth ? startDate = moment(this.state.currentMonth).startOf('week') : startDate = moment(this.state.nextMonth).startOf('week');
-
     for (var i = 0; i < 7; i++) {
       days.push(
         <WeekDay key={i}>{moment(startDate).add(i, 'days').format(dateFormat).toUpperCase()}</WeekDay>
       );
     }
     return days;
-
   }
 
   renderCells (term) {
     let currentMonth;
-    if (term === this.state.currentMonth) {
-      currentMonth = this.state.currentMonth;
-    } else {
-      currentMonth = this.state.nextMonth;
-    }
+    if (term === this.state.currentMonth) currentMonth = this.state.currentMonth;
+    else currentMonth = this.state.nextMonth;
+
     const selectedDate = this.state.selectedDate;
-    const dateFormat = 'D';
     const monthStart = moment(currentMonth).startOf('month');
     const monthEnd = moment(currentMonth).endOf('month');
     const startDate = moment(monthStart).startOf('week');
     const endDate = moment(monthEnd).endOf('week');
     const today = moment().startOf('day');
-
     const rows = [];
     let days = [];
     let day = startDate;
@@ -90,7 +82,7 @@ class Calendar extends React.Component {
 
     while (day < endDate) {
       for (let i = 0; i < 7; i++) {
-        formattedDate = moment(day).format(dateFormat);
+        formattedDate = moment(day).format('D');
         const dayCopy = day;
         days.push(
           <div
@@ -98,8 +90,8 @@ class Calendar extends React.Component {
               moment(day).isSame(moment(), 'day') ? '-today' :
                 !moment(day).isSame(monthStart, 'month') ? '-disabled' :
                   moment(day).isBefore(today) ? '-inactive' :
-                    moment(day).isSame(this.state.checkIn, 'day') ? '-checkIn' :
-                      moment(day).isSame(this.state.checkOut, 'day') ? '-checkOut' : ''
+                    this.state.checkIn && moment(day).isSame(this.state.checkIn, 'day') ? '-checkIn' :
+                      this.state.checkOut && moment(day).isSame(this.state.checkOut, 'day') ? '-checkOut' : ''
             }`}
             key={day}
             onClick={ ()=>{ this.onDateClick(dayCopy); }}
@@ -132,7 +124,7 @@ class Calendar extends React.Component {
           checkOut: day,
           clickCounter: 0
         }, () => { this.checkState(); });
-      } else {}
+      }
     }
   }
 
@@ -165,7 +157,13 @@ class Calendar extends React.Component {
     return (
       <CalendarPortalWrapper>
 
-        <CalendarHeader>Select a date to continue
+        <CalendarHeader>
+
+          <CalendarHeaderTop>
+            <CalendarHeaderTopText>Select a date to continue</CalendarHeaderTopText>
+            <CloseButton onClick={this.props.changeCalendarView}></CloseButton>
+          </CalendarHeaderTop>
+
           <CalendarLegendDiv>
             <CalendarLegendSpan></CalendarLegendSpan>Lowest priced dates
           </CalendarLegendDiv>
@@ -228,6 +226,9 @@ class Calendar extends React.Component {
           <CalendarAverageSectionSpan>
           Average daily rates: {this.props.calculateAvrgRate()}
           </CalendarAverageSectionSpan>
+          <CalendarAverageSectionMsgSpan>
+            {this.props.displayNotAvailableMsg()}
+          </CalendarAverageSectionMsgSpan>
         </CalendarAverageSection>
 
       </CalendarPortalWrapper>

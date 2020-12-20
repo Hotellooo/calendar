@@ -8,30 +8,22 @@ const moment = require('moment');
 const cors = require('cors');
 app.use(cors());
 
-app.listen(port, () => console.log(`App listening on http://localhost:${port}`));
-
 app.use(morgan('dev'));
 app.use(parser.urlencoded({extended: true}));
-
 app.use(express.static('public'));
 
-app.get('/api/calendar/db/:hotelIdOrName', (req, res) => {
-  console.log('REQUEST FROM HELP FUNC RECIEVED!');
-  console.log(req.params);
+app.get('/api/calendar/hotels/:hotelIdOrName', (req, res) => {
   let q = req.params.hotelIdOrName;
   let parsed = parseInt(q);
-  if (parsed) {
-    search = {'id': q};
-    console.log(search);
-  } else {
-    search = {'hotelName': {'$regex': q.slice(0, 1).toUpperCase() + q.slice(1)}};
-  }
+  let search;
+  if (parsed) search = {'id': parsed};
+  else search = {'hotelName': {'$regex': q.slice(0, 1).toUpperCase() + q.slice(1)}};
   db.model.find(search, (err, data) => {
-    console.log('QUERY SENT');
     if (err) {
       console.log('DB QUERY ERROR', err);
       res.status(400).send();
-    } else {
+    }
+    if (data) {
       console.log('DB QUERY SUCCESS');
       res.status(200).send(data);
     }
@@ -54,25 +46,20 @@ const sendResponseWithUpdatedData = (data, req, res) => {
   }
 
   if (dataItem.roomsTotal < roomsNumber) {
-    rej[0]['err_msg'] = '<over the limit of rooms available at the property>';
+    rej[0]['err_msg'] = '* Over the limit of rooms available at the property';
     response = false;
   }
-
   let checkInIndex;
   let checkOutIndex;
   for (let i = 0; i < dataItem.vacancy.length; i ++) {
-    if (dataItem.vacancy[i].date === checkInDate) {
-      checkInIndex = i;
-    }
-    if (dataItem.vacancy[i].date === checkOutDate) {
-      checkOutIndex = i;
-    }
+    if (dataItem.vacancy[i].date === checkInDate) checkInIndex = i;
+    if (dataItem.vacancy[i].date === checkOutDate) checkOutIndex = i;
   }
   let timeGap = dataItem.vacancy.slice(checkInIndex, checkOutIndex);
   totalNights = timeGap.length;
   for (let j = 0; j < timeGap.length; j++) {
     if (timeGap[j].isBooked) {
-      rej[0]['err_msg'] += '<your dates are not available>';
+      rej[0]['err_msg'] += '* Sorry, chosen dates are not available';
       response = false;
       break;
     }
@@ -80,12 +67,8 @@ const sendResponseWithUpdatedData = (data, req, res) => {
   for (let k = 0; k < newData[0].prices.length; k++) {
     newData[0].prices[k].price *= totalNights * roomsNumber;
   }
-
-  if (response) {
-    res.status(200).send(newData);
-  } else {
-    res.status(200).send(rej);
-  }
+  if (response) res.status(200).send(newData);
+  else res.status(200).send(rej);
 };
 
 app.get('/api/calendar/update/', (req, res) => {
@@ -98,5 +81,7 @@ app.get('/api/calendar/update/', (req, res) => {
     }
   });
 });
+
+app.listen(port, () => console.log(`App listening on http://localhost:${port}`));
 
 module.exports = app;
