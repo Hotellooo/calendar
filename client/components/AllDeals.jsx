@@ -57,13 +57,13 @@ class AllDeals extends React.Component {
   }
 
   renderPrice (price) {
-    return price ? `$${price}` : <FontAwesomeIcon icon={faTimesCircle} size='sm' color='grey'/>
+    return price ? `$${price}` : <FontAwesomeIcon icon={faTimesCircle} size='sm' color='grey'/>;
   }
 
   togglePopup () {
     this.setState({
       popUpVis: !this.state.popUpVis
-    })
+    });
   }
 
   onClickHandler () {
@@ -75,13 +75,13 @@ class AllDeals extends React.Component {
 
   renderPopupPortal (flag) {
     return flag ? ReactDOM.createPortal(
-    <PopupWrapper>
-      <PopupTextDiv>
+      <PopupWrapper>
+        <PopupTextDiv>
         Prices are the average nightly price provided by our partners and may not include all taxes and fees. Taxes and fees that are shown are estimates only. Please see our partners for more details.
-      </PopupTextDiv>
-    </PopupWrapper>
-    ,
-    document.getElementById('popup')) : null
+        </PopupTextDiv>
+      </PopupWrapper>
+      ,
+      document.getElementById('popup')) : null;
   }
 
   renderAll () {
@@ -107,7 +107,7 @@ class AllDeals extends React.Component {
               </ViewAllPortalLineInnerDiv>
 
               <ViewPortalLinePriceSpan>
-              {this.renderPrice(hotels[0].prices[i].price)}
+                {this.renderPrice(hotels[0].prices[i].price)}
               </ViewPortalLinePriceSpan>
 
             </ViewPortalLineDiv>

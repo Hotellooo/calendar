@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Children = ({ childrenNumber }) => {
   const rows = [];
-  for(let i = 1; i <= childrenNumber; i++) {
+  for (let i = 1; i <= childrenNumber; i++) {
     rows.push(
       <ChildrenInnerLine key={i}>
         <ChildrenInnerLineDiv>

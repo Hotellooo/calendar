@@ -19,7 +19,7 @@ class Calendar extends React.Component {
       checkOut: false,
       clickCounter: 0,
       averageRate: ''
-    }
+    };
     this.onDateClick = this.onDateClick.bind(this);
     this.nextMonth = this.nextMonth.bind(this);
     this.prevMonth = this.prevMonth.bind(this);
@@ -228,7 +228,7 @@ class Calendar extends React.Component {
           Average daily rates: {this.props.calculateAvrgRate()}
           </CalendarAverageSectionSpan>
           <CalendarAverageSectionMsgSpan>
-          {this.props.displayNotAvailableMsg()}
+            {this.props.displayNotAvailableMsg()}
           </CalendarAverageSectionMsgSpan>
         </CalendarAverageSection>
 

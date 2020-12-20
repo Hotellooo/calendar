@@ -20,14 +20,14 @@ app.get('/api/calendar/hotels/:hotelIdOrName', (req, res) => {
   else search = {'hotelName': {'$regex': q.slice(0, 1).toUpperCase() + q.slice(1)}};
   db.model.find(search, (err, data) => {
     if (err) {
-      console.log('DB QUERY ERROR', err)
+      console.log('DB QUERY ERROR', err);
       res.status(400).send();
     }
     if (data) {
       console.log('DB QUERY SUCCESS');
       res.status(200).send(data);
     }
-  })
+  });
 });
 
 const sendResponseWithUpdatedData = (data, req, res) => {

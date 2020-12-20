@@ -8,7 +8,7 @@ const option = {
   useCreateIndex: true,
 };
 
-mongoose.connect('mongodb://localhost/hotellist', option) // 172.17.0.2
+mongoose.connect('mongodb://localhost/hotellist', option); // 172.17.0.2
 const db = mongoose.connection;
 
 //Test connection

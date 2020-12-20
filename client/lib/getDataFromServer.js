@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const getDataFromServer = async (term) => {
-  try{
+  try {
     const response = await axios.get(`/api/calendar/hotels/${term}`);
     return response.data;
   } catch (err) {

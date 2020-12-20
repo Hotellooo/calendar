@@ -81,7 +81,7 @@ class App extends React.Component {
 
   handleResponse (hotel) {
     if (hotel[0]['err_msg']) {
-      this.setState({ msg: hotel[0]['err_msg'] })
+      this.setState({ msg: hotel[0]['err_msg'] });
     } else {
       if (this.state.calendarView) {
         this.setState({
@@ -99,13 +99,13 @@ class App extends React.Component {
   }
 
   displayNotAvailableMsg () {
-    return this.state.msg.length ? this.state.msg : null
+    return this.state.msg.length ? this.state.msg : null;
   }
 
   updateGuestPickerInfo ({adultsNumber, childrenNumber, roomsNumber}) {
     this.setState({
       userConfig: { roomsNumber, adultsNumber, childrenNumber }
-    })
+    });
   }
 
   calculateAvrgRate () {
@@ -180,7 +180,7 @@ class App extends React.Component {
 
   renderCalendar () {
     return !this.state.calendarView ? this.renderCalendarBasics() :
-    (<div>{this.renderCalendarBasics()}{this.renderCalendarPortal()}</div>)
+      (<div>{this.renderCalendarBasics()}{this.renderCalendarPortal()}</div>);
   }
 
   changeGuestsView () {
@@ -192,38 +192,38 @@ class App extends React.Component {
   renderGuestsBasics () {
     return (
       <div>
-      <GuestsButton onClick={this.changeGuestsView}>
-        <GuestsButtonDiv>
-          <GuestsButtonIconSpan></GuestsButtonIconSpan>
+        <GuestsButton onClick={this.changeGuestsView}>
+          <GuestsButtonDiv>
+            <GuestsButtonIconSpan></GuestsButtonIconSpan>
 
-          <GuestsButtonPickerSpan>
+            <GuestsButtonPickerSpan>
 
-            <GuestsButtonPickerSpanGuestsSpan>Guests
-            </GuestsButtonPickerSpanGuestsSpan>
+              <GuestsButtonPickerSpanGuestsSpan>Guests
+              </GuestsButtonPickerSpanGuestsSpan>
 
-            <GuestsButtonPickerSpanGuestsConfigSpan>
-              <span>
-                <GuestsButtonPickerSpanGuestsConfigInnerSpan>
-                  {this.state.userConfig.roomsNumber}
-                  {this.state.userConfig.roomsNumber > 1 ? ' rooms, ' : ' room, '}
-                </GuestsButtonPickerSpanGuestsConfigInnerSpan>
+              <GuestsButtonPickerSpanGuestsConfigSpan>
+                <span>
+                  <GuestsButtonPickerSpanGuestsConfigInnerSpan>
+                    {this.state.userConfig.roomsNumber}
+                    {this.state.userConfig.roomsNumber > 1 ? ' rooms, ' : ' room, '}
+                  </GuestsButtonPickerSpanGuestsConfigInnerSpan>
 
-                <GuestsButtonPickerSpanGuestsConfigInnerSpan>
-                  {this.state.userConfig.adultsNumber}
-                  {this.state.userConfig.adultsNumber > 1 ? ' adults, ' : ' adult, '}
-                </GuestsButtonPickerSpanGuestsConfigInnerSpan>
+                  <GuestsButtonPickerSpanGuestsConfigInnerSpan>
+                    {this.state.userConfig.adultsNumber}
+                    {this.state.userConfig.adultsNumber > 1 ? ' adults, ' : ' adult, '}
+                  </GuestsButtonPickerSpanGuestsConfigInnerSpan>
 
-                <GuestsButtonPickerSpanGuestsConfigInnerSpan>
-                  {this.state.userConfig.childrenNumber}
-                  {this.state.userConfig.childrenNumber > 1 ? ' children' : ' child'}
-                </GuestsButtonPickerSpanGuestsConfigInnerSpan>
-              </span>
-            </GuestsButtonPickerSpanGuestsConfigSpan>
+                  <GuestsButtonPickerSpanGuestsConfigInnerSpan>
+                    {this.state.userConfig.childrenNumber}
+                    {this.state.userConfig.childrenNumber > 1 ? ' children' : ' child'}
+                  </GuestsButtonPickerSpanGuestsConfigInnerSpan>
+                </span>
+              </GuestsButtonPickerSpanGuestsConfigSpan>
 
-          </GuestsButtonPickerSpan>
+            </GuestsButtonPickerSpan>
 
-        </GuestsButtonDiv>
-      </GuestsButton>
+          </GuestsButtonDiv>
+        </GuestsButton>
       </div>
     );
   }

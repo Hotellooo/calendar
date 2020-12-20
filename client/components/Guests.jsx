@@ -53,9 +53,9 @@ class Guests extends React.Component {
   }
 
   renderIcon (param) {
-    if(param === 'roomsNumber') return <FontAwesomeIcon icon={faBed}></FontAwesomeIcon>
-    if(param === 'adultsNumber') return <FontAwesomeIcon icon={faUserFriends}></FontAwesomeIcon>
-    if(param === 'childrenNumber') return <FontAwesomeIcon icon={faChild}></FontAwesomeIcon>
+    if (param === 'roomsNumber') return <FontAwesomeIcon icon={faBed}></FontAwesomeIcon>;
+    if (param === 'adultsNumber') return <FontAwesomeIcon icon={faUserFriends}></FontAwesomeIcon>;
+    if (param === 'childrenNumber') return <FontAwesomeIcon icon={faChild}></FontAwesomeIcon>;
   }
 
   render () {
