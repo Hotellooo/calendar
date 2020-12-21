@@ -9,7 +9,7 @@ const randomPrice = (min, max) => {
 
 const randomIsBooked = () => {
   const temp = Math.random();
-  return temp >= 0.7 ? true : false;
+  return temp >= 0.8 ? true : false;
 };
 
 const generateSampleData = (numberOfDataToGenerate) => {
@@ -27,7 +27,7 @@ const generateSampleData = (numberOfDataToGenerate) => {
     obj['vacancy'] = [];
     for (let k = 0; k < 366; k++) {
       let entity = {};
-      entity['date'] = moment('2020-01-01').add(k, 'days').format('YYYY-MM-DD');
+      entity['date'] = moment('2020-12-01').add(k, 'days').format('YYYY-MM-DD');
       entity['isBooked'] = randomIsBooked();
       obj['vacancy'].push(entity);
     }
@@ -46,6 +46,7 @@ const generateSampleData = (numberOfDataToGenerate) => {
 const generatedData = generateSampleData(100);
 
 const insertSampleData = function(data) {
+  database.model.collection.drop();
   database.model.create(data)
     .then((result) => {
       console.log(`Data insertion SUCCESS. ${result.length} items inserted.`);
