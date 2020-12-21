@@ -1,9 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import moment from 'moment';
-import {
-  BestDealsEntityDiv, BestDealsEntityHeadDiv, BestDealsEntityLogoDiv, BestDealsEntityPriceDiv, BestDealsEntityButton, BestDealsEntityLogoPicture, BestDealsEntityPriceInnerDiv, BestDealsEntityPriceInnerDivQuote, BestDealsEntityButtonDiv, BestDealsEntityButtonDivSpan, BestDealsEntityBottomDiv, BestDealsEntityCancellationDiv, BestDealsEntityCancellationTextSpan
-} from './BestDealsEntityStyles.js';
+import styled from 'styled-components';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -22,7 +19,7 @@ const BestDealsEntity = ({ item, userDates }) => {
       'Prestigia': 'https://static.tacdn.com/img2/branding/hotels/logo-prestigia-size-384-164.png'
     };
     return (
-      <BestDealsEntityLogoPicture src={links[item.serviceName]}></BestDealsEntityLogoPicture>
+      <LogoPicture src={links[item.serviceName]}></LogoPicture>
     );
   };
 
@@ -33,43 +30,138 @@ const BestDealsEntity = ({ item, userDates }) => {
   };
 
   return (
-    <div>
-      <BestDealsEntityDiv>
-
-        <BestDealsEntityHeadDiv>
-
-          <BestDealsEntityLogoDiv>
-            {chooseLogo(item)}
-          </BestDealsEntityLogoDiv>
-
-          <BestDealsEntityPriceDiv>
-            <BestDealsEntityPriceInnerDivQuote>${item.price}</BestDealsEntityPriceInnerDivQuote>
-          </BestDealsEntityPriceDiv>
-
-          <BestDealsEntityButton>
-            <BestDealsEntityButtonDiv>
-              <BestDealsEntityButtonDivSpan>View Deal</BestDealsEntityButtonDivSpan>
-            </BestDealsEntityButtonDiv>
-          </BestDealsEntityButton>
-        </BestDealsEntityHeadDiv>
-
-        <BestDealsEntityBottomDiv>
-          <BestDealsEntityCancellationDiv>
-            <FontAwesomeIcon icon={faCheck}/>
-            <BestDealsEntityCancellationTextSpan type="fat">
-              {calcFreeCancel(userDates)}
-            </BestDealsEntityCancellationTextSpan>
-          </BestDealsEntityCancellationDiv>
-
-          <BestDealsEntityCancellationDiv>
-            <FontAwesomeIcon icon={faCheck}/>
-            <BestDealsEntityCancellationTextSpan type="slim">Reserve now, pay at stay</BestDealsEntityCancellationTextSpan>
-          </BestDealsEntityCancellationDiv>
-        </BestDealsEntityBottomDiv>
-
-      </BestDealsEntityDiv>
-    </div>
+    <Div>
+      <HeadDiv>
+        <LogoDiv>{chooseLogo(item)}</LogoDiv>
+        <PriceDiv><Quote>${item.price}</Quote></PriceDiv>
+        <Button>
+          <ButtonDiv><ButtonDivSpan>View Deal</ButtonDivSpan></ButtonDiv>
+        </Button>
+      </HeadDiv>
+      <BottomDiv>
+        <CancelDiv>
+          <FontAwesomeIcon icon={faCheck}/>
+          <CancelTextSpan type="fat">{calcFreeCancel(userDates)}</CancelTextSpan>
+        </CancelDiv>
+        <CancelDiv>
+          <FontAwesomeIcon icon={faCheck}/>
+          <CancelTextSpan type="slim">Reserve now, pay at stay</CancelTextSpan>
+        </CancelDiv>
+      </BottomDiv>
+    </Div>
   );
 };
+
+const ButtonDiv = styled.div`
+  display: block;
+  min-height: 42px;
+  border-radius: 12px;
+  border-color: #f2b203;
+  background-color: #f2b203;
+  color: #000;
+  font-family: 'Poppins', sans-serif;
+`;
+
+const Div = styled.div`
+  &:hover  {
+    color: #000a12;
+    text-decoration: none;
+    background: #f9f9f9;
+    box-shadow:0 3px 2px -2px hsla(0,0%,60%,.4);
+    ${ButtonDiv}{
+      border-color: #fee190;
+      background-color: #fee190;
+    }
+  }
+  color: white;
+  cursor: pointer;
+  color: #000;
+  position: relative;
+  border: solid #e0e0e0;
+  border-width: 0 0 1px;
+  padding: 10px 0;
+`;
+
+const HeadDiv = styled.div`
+  display:flex;
+  margin-left: 0;
+  margin-right: 0;
+`;
+
+const LogoDiv = styled.div`
+  color: #4a4a4a;
+  font-weight: 700;
+  height: 45px;
+  -webkit-align-self: stretch;
+  -ms-flex-item-align: stretch;
+  align-self: stretch;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 33.33333333%;
+`;
+
+const LogoPicture = styled.img`
+  width: 103px;
+  height: 44px;
+`;
+
+const PriceDiv = styled.div`
+  color: black;
+  width: 33.33333333%;
+`;
+
+const PriceInnerDiv = styled.div`
+  width: 33.33333333%;
+`;
+
+const Quote = styled.div`
+  font-size: 24px;
+  font-weight: 400;
+  line-height: normal;
+  text-align: right;
+  padding-top:5px;
+  padding-right: 5px;
+`;
+
+const Button = styled.div`
+  width: 33.33333333%;
+  flex:none;
+`;
+
+const ButtonDivSpan = styled.span`
+  display: block;
+  padding: 10px 22px;
+  font-size: 15px;
+  line-height: 20px;
+`;
+
+const BottomDiv = styled.div`
+  display: block;
+`;
+
+const CancelDiv = styled.div`
+  display: inline-block;
+  margin-right: 8px;
+  line-height: 12px;
+  font-size: 12px;
+  color: #4a4a4a;
+  width: 100%;
+`;
+
+const CancelTextSpan = styled.span`
+${props => {
+    if (props.type === 'fat') {
+      return 'font-weight:700;font-size: 14px;';
+    } else {
+      return 'font-weight:400;font-size: 12px;';
+    }
+  }}
+  line-height: 12px;
+  padding-left: 5px;
+`;
 
 export default BestDealsEntity;
