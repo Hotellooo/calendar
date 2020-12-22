@@ -17,7 +17,7 @@ Calendar microservice of HotellMe full-stack web application for booking hotel r
 ## Gifs
 
 <p float="left">
-  <div style="border:1px solid black">
+  <div>
     <img src="./assets/perform.gif" width="805"/>
   </div>
 </p>
@@ -25,22 +25,22 @@ Calendar microservice of HotellMe full-stack web application for booking hotel r
 ## Screenshots
 
 <p float="left">
-  <img src="./assets/shot2_m.png" width="805" style="border:1px solid black" alt="HotellMe app. Main view"/>
-  <img src="./assets/shot1_m.png" width="805" style="border:1px solid black" alt="Calendar portal visible" />
+  <img src="./assets/shot1.png" width="805" style="border:1px solid black" alt="Calendar portal visible" />
+  <img src="./assets/shot2.png" width="805" style="border:1px solid black" alt="HotellMe app. Main view"/>
 </p>
 
 <p float="left">
-  <img src="./assets/shot3_m.png" width="400" height="449" style="border:1px solid black" alt="Calendar microservice - main view"/>
-  <img src="./assets/shot4_m.png" width="400" height="449" style="border:1px solid black" alt="Calendar microservice - AllDeals portal visible" />
+  <img src="./assets/shot3.png" width="400" height="448" style="border:1px solid black" alt="Calendar microservice - main view"/>
+  <img src="./assets/shot4.png" width="400" height="448" style="border:1px solid black" alt="Calendar microservice - AllDeals portal visible" />
 </p>
 
 <p float="left">
-  <img src="./assets/shot5_m.png" width="400" height="449" style="border:1px solid black" alt="Calendar microservice - Guests portal visible"/>
-  <img src="./assets/shot6_m.png" width="400" height="449" style="border:1px solid black" alt="Calendar microservice - informational pop-up visible" />
+  <img src="./assets/shot5.png" width="400" height="448" style="border:1px solid black" alt="Calendar microservice - Guests portal visible"/>
+  <img src="./assets/shot6.png" width="400" height="448" style="border:1px solid black" alt="Calendar microservice - informational pop-up visible" />
 </p>
 
 ## Video
-demo video on [Youtube](https://youtu.be/7Sh_2GsaL0s)
+demo video on [Youtube](https://youtu.be/A4WlFbRBHOU)
 
 ## Installation
 

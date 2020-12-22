@@ -15,7 +15,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 class App extends React.Component {
   constructor (props) {
     super(props);
-
     this.state = {
       calendarView: false,
       guestsView: false,
@@ -44,7 +43,7 @@ class App extends React.Component {
   }
 
   componentDidMount () {
-    this.getData(90);
+    this.getData(83);
   }
 
   getData (term) {
@@ -263,12 +262,11 @@ class App extends React.Component {
   }
 }
 
-
 const AppWrapper = styled.div`
   background-color: lightblue;
   min-width: 395px;
-  // height: 478px;
-  height: auto;
+  height: 478px;
+  // height: auto;
   padding: 4px 16px 0;
   box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
   min-height: 430px;
@@ -323,7 +321,7 @@ const PickerButtonDiv = styled.div`
     width:10px;
     ${(props) => {
     return props.color === 'green' ? 'background-color:#00a680; color:#00a680' :
-      props.color === 'grey' ? 'background-color:grey; color:#d91e18' :
+      props.color === 'grey' ? 'background-color:grey; color:grey' :
         'background-color:#d91e18; color:#d91e18';
   }}
   }
