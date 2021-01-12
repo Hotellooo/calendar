@@ -11,20 +11,16 @@
   "engines": {
     "node": ">=6.13.0"
   },
-  "jest": {
-    "setupFilesAfterEnv": [
-      "<rootDir>enzyme.config.js"
-    ]
-  },
   "scripts": {
     "start": "nodemon server/index.js",
     "db-seed": "node database/seed.js",
-    "lint": "eslint client --ext .jsx server --ext .js database --ext .js test --ext .js",
-    "lint-fix": "eslint client --ext .jsx server --ext .js database --ext .js test --ext .js --fix",
+    "lint": "eslint client --ext .jsx server --ext .js database --ext .js tests --ext .js",
+    "lint-fix": "eslint client --ext .jsx server --ext .js database --ext .js tests --ext .js --fix",
     "react-dev": "webpack --config webpack.dev.js -d --watch",
     "build": "webpack --config webpack.prod.js",
-    "test:watch": "jest --watchAll",
-    "test:coverage": "jest --coverage"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage --colors"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.29",
@@ -32,7 +28,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.13.1",
     "@fortawesome/free-solid-svg-icons": "^5.13.1",
     "@fortawesome/react-fontawesome": "^0.1.11",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "eslint": "^6.8.0",
@@ -47,24 +43,25 @@
     "path": "^0.12.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "styled-components": "^5.1.1",
-    "supertest": "^4.0.2"
+    "styled-components": "^5.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
+    "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.10.3",
     "@babel/preset-react": "^7.10.1",
+    "@babel/runtime": "^7.12.5",
     "@testing-library/react": "^10.3.0",
     "babel-eslint": "^10.1.0",
-    "babel-jest": "^26.0.1",
     "babel-loader": "^8.1.0",
     "babel-plugin-styled-components": "^1.10.7",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor.git",
     "eslint-plugin-react": "^7.20.0",
-    "jest": "^26.0.1",
-    "react-test-renderer": "^16.13.1",
+    "jest": "^26.6.3",
+    "jest-styled-components": "^7.0.3",
+    "react-test-renderer": "^17.0.1",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12"
   }

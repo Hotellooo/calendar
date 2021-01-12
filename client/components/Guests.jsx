@@ -5,8 +5,8 @@ import { faMinus, faPlus, faBed, faUserFriends, faChild } from '@fortawesome/fre
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 class Guests extends React.Component {
-  constructor () {
-    super();
+  constructor (props) {
+    super(props);
     this.state = {
       roomsNumber: 1,
       adultsNumber: 2,
