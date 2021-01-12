@@ -241,7 +241,6 @@ const ViewAllDiv = styled.div`
   line-height: 1.5em;
   cursor: pointer;
   font-size: 12px;
-
 `;
 
 const PortalWrapper = styled.div`
@@ -314,7 +313,7 @@ const Icon = styled.span`
   color: black;
 `;
 
-const PopupWrapper = styled.div`
+export const PopupWrapper = styled.div`
   box-shadow: 0 2px 4px 0 rgba(0,0,0,.1);
   box-sizing: border-box;
   border-radius: 2px;

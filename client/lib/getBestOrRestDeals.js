@@ -1,7 +1,8 @@
 const getBestOrRestDeals = (hotels, param) => {
   const hotel = hotels[0];
   const prices = hotel.prices;
-  prices.sort((a, b)=>{ return a.price === b.price ? 0 : a.price < b.price ? -1 : 1; });
+  prices.sort((a, b) => { return a.price === b.price ? 0 : a.price < b.price ? -1 : 1; });
+  // console.log('HOTEL:',prices)
   const temp = prices.reduce((memo, item)=>{
     if (item.price !== 0) memo.push(item);
     return memo;

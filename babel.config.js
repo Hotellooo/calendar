@@ -4,6 +4,11 @@ module.exports = {
     ["babel-plugin-styled-components", {
       "minify": true,
       "transpileTemplateLiterals": true
-    }]
+    }],
+    ["@babel/plugin-transform-runtime",
+      {
+        "regenerator": true
+      }
+    ]
   ]
 };

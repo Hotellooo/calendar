@@ -46,13 +46,9 @@ class App extends React.Component {
     this.getData(83);
   }
 
-  getData (term) {
-    const response = getDataFromServer(term);
-    response.then((hotel) => {
-      this.setState({
-        currentHotel: hotel
-      });
-    });
+  async getData (term) {
+    const response = await getDataFromServer(term);
+    this.setState({ currentHotel: response });
   }
 
   getUpdatedData (...args) {
@@ -126,8 +122,8 @@ class App extends React.Component {
     });
   }
 
-  renderDate (param) {
-    return !param ? (<span>{moment().format('ddd')}, {moment().format('MM/DD/YYYY')}</span>) :
+  renderDate (param, day) {
+    return !param ? (<span>{moment().add(day, 'day').format('ddd')}, {moment().add(day, 'day').format('MM/DD/YYYY')}</span>) :
       (<span>{moment(param).format('ddd')}, {moment(param).format('MM/DD/YYYY')}</span>);
   }
 
@@ -139,7 +135,7 @@ class App extends React.Component {
             <PickerButtonIcon><FontAwesomeIcon icon={faCalendarAlt}/></PickerButtonIcon>
             <PickerButtonField>
               <PickerButtonCheckIn>Check In</PickerButtonCheckIn>
-              <PickerButtonDate>{this.renderDate(this.state.checkIn)}</PickerButtonDate>
+              <PickerButtonDate>{this.renderDate(this.state.checkIn, 0)}</PickerButtonDate>
             </PickerButtonField>
           </PickerButtonDiv>
         </PickerButton>
@@ -149,7 +145,7 @@ class App extends React.Component {
             <PickerButtonIcon><FontAwesomeIcon icon={faCalendarAlt}/></PickerButtonIcon>
             <PickerButtonField>
               <PickerButtonCheckIn>Check Out</PickerButtonCheckIn>
-              <PickerButtonDate>{this.renderDate(this.state.checkOut)}</PickerButtonDate>
+              <PickerButtonDate>{this.renderDate(this.state.checkOut, 1)}</PickerButtonDate>
             </PickerButtonField>
           </PickerButtonDiv>
         </PickerButton>
